@@ -7,7 +7,7 @@ class Settings:
         self.screen_height = 600
         self.bg_color = (32, 32, 32)
         self.FPS = 60
-        self.game_name = "Meow Fantasy"
+        self.game_name = "Fantasy"
         self.game_version = "0.0.1"
         self.game_author = "Isaac F. e Israel S."
 
