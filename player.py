@@ -13,12 +13,12 @@ class Player(pygame.sprite.Sprite):
         self.playerY = settings.screen_height / 2 - self.player_height / 2
         self.speed = 5
 
-        self.test_player = pygame.image.load(os.path.join('assets', 'testPlayer.png'))
-        self.test_player = pygame.transform.scale(self.test_player, (self.player_width, self.player_height))
-        
-        self.rect = self.test_player.get_rect()
+        self.image = pygame.image.load(os.path.join('assets', 'testPlayer.png'))
+        self.image = pygame.transform.scale(self.image, (self.player_width, self.player_height))
+        self.rect = self.image.get_rect()
         self.rect.center = (self.playerX, self.playerY)
- 
+
+
     def get_input(self):
         keys = pygame.key.get_pressed()
 

@@ -12,13 +12,17 @@ class Game:
     def __init__(self):
         self.run = True
         self.player_sprite = Player()
+        self.player_sprite_group = pygame.sprite.Group()
+        self.player_sprite_group.add(self.player_sprite)
 
     
     
     def run_game(self):
         # all the code for the game
-        screen.blit(self.player_sprite.test_player, self.player_sprite.rect) # blitting the player on the screen
+
         self.player_sprite.update()
+        self.player_sprite_group.draw(screen) # drawing the player on the screen
+
         
 
 
