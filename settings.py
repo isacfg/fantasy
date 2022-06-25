@@ -1,15 +1,15 @@
 
 # Settings Variables
-user_settings = {
-    "screen_width": 1200,
-    "screen_height": 800,
-    "bg_color": (230, 230, 230)
-}
 
-game_variables = {
-    "FPS": 60,
-    "game_name": "Meow Fantasy"
-}
+class Settings:
+    def __init__(self):
+        self.screen_width = 800
+        self.screen_height = 600
+        self.bg_color = (32, 32, 32)
+        self.FPS = 60
+        self.game_name = "Meow Fantasy"
+        self.game_version = "0.0.1"
+        self.game_author = "Isaac F. e Israel S."
 
 # main_font = pygame.font.SysFont(None, 48) # criando uma fonte para o jogo
 
