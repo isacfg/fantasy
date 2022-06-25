@@ -6,9 +6,12 @@ import os
 
 # Importing settings
 from settings import Settings
+from player import Player    
 
 class Game:
     def __init__(self):
+        player_sprite = Player()
+        self.player = player_sprite
         self.run = True
         pass
 
@@ -37,7 +40,7 @@ if __name__ == '__main__':
         screen.fill(settings.bg_color) # filling the screen with a color
         game.run_game() # running the game
 
-        pygame.display.flip() # updating the screen
+        pygame.display.update() # updating the screen
         clock.tick(settings.FPS) # setting the FPS to 60
                     
 
