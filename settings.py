@@ -3,8 +3,8 @@
 
 class Settings:
     def __init__(self):
-        self.screen_width = 800
-        self.screen_height = 600
+        self.screen_width = 1200
+        self.screen_height = 680
         self.bg_color = (32, 32, 32)
         self.FPS = 60
         self.game_name = "Fantasy"
