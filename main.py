@@ -51,8 +51,6 @@ if __name__ == '__main__':
 
         game.run_game() # running the game
 
-        # temporary code
-
         pygame.display.update() # updating the screen
         clock.tick(settings.FPS) # setting the FPS to 60
                     
