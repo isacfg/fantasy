@@ -33,6 +33,7 @@ if __name__ == '__main__':
     pygame.display.set_caption(settings.game_name) # setando o nome do jogo
     clock = pygame.time.Clock() # criando um relógio para controlar o FPS
 
+    # screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN) # criando a tela
     screen = pygame.display.set_mode((settings.screen_width, settings.screen_height)) # criando a tela do jogo
     game = Game() # iniciando a classe Game
 
