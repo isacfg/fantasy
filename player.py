@@ -84,8 +84,10 @@ class Player(pygame.sprite.Sprite):
 
             if self.current_sprite >= len(self.jump_sprites):
                 self.current_sprite = 0
+                self.is_jumping = False
 
             self.image = self.jump_sprites[int(self.current_sprite)]
+   
 
     def get_input(self):
         keys = pygame.key.get_pressed()
