@@ -1,5 +1,4 @@
-import pygame, sys
-import os
+import pygame, sys, time
 
 # Iniciando fontes
 # pygame.font.init()
@@ -15,19 +14,29 @@ class Game:
         self.player_sprite_group = pygame.sprite.Group()
         self.player_sprite_group.add(self.player_sprite)
 
+
     
     
-    def run_game(self):
+    def run_game(self, deltaTime):
         # all the code for the game
 
-        self.player_sprite.update()
-        self.player_sprite_group.draw(screen) # drawing the player on the screen
+        self.player_sprite.update(deltaTime)
+        # self.player_sprite_group.draw(screen) # drawing the player on the screen
+        self.player_sprite.draw(screen)
 
-        
+    def framerate_independence():
+        # Implementing frame rate independence 
+
+        # now_time = time.time()
+        # deltaTime = now_time - self.prev_time
+        # self.prev_time = now_time
+        # return deltaTime
+        pass
 
 
 if __name__ == '__main__':
-    settings = Settings()    
+    settings = Settings()
+    prev_time = time.time()    
 
     pygame.init() # initializing pygame
     pygame.display.set_caption(settings.game_name) # setando o nome do jogo
@@ -38,10 +47,10 @@ if __name__ == '__main__':
     game = Game() # iniciando a classe Game
 
 
-    # temporary code
-
 
     while game.run:
+        deltaTime = clock.tick(60) * 0.001 * settings.TARGET_FPS
+
         for event in pygame.event.get(): # watching for events
             if event.type == pygame.QUIT: # if the user clicked the close button
                 game.run = False # stop the game
@@ -50,7 +59,7 @@ if __name__ == '__main__':
 
         screen.fill(settings.bg_color) # filling the screen with a color
 
-        game.run_game() # running the game
+        game.run_game(deltaTime) # running the game
 
         pygame.display.update() # updating the screen
         clock.tick(settings.FPS) # setting the FPS to 60
