@@ -54,4 +54,4 @@ if __name__ == '__main__':
 
         pygame.display.update() # updating the screen
         clock.tick(settings.FPS) # setting the FPS to 60
-                    
+        # print(clock.get_fps()) # printing the FPS          

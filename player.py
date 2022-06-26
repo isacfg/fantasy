@@ -15,6 +15,8 @@ class Player(pygame.sprite.Sprite):
         self.speed = 2.5
         self.animation_speed = 0.125
 
+
+        # Animation Variables
         self.is_idle = True
         self.is_running_right = False
         self.is_running_left = False
