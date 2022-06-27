@@ -12,21 +12,26 @@ class Player(pygame.sprite.Sprite):
         self.playerX = settings.screen_width / 2 - self.player_width / 2
         self.playerY = settings.screen_height / 2 - self.player_height / 2
 
-        self.speed = 2.5
-        self.animation_speed = 0.15
+        self.animation_speed = 0.225
+        self.speed = 4
+
+
+        # Simplified Physics
+
+
 
         # Physics
-        self.gravity = 0.6
-        self.friction = -0.2 # lower more slippery
-        self.max_velocity_x = 10
-        self.max_velocity_y = 7
-        self.acceleration_in_x = 1.4
-        self.jump_speed = -16
-        self.on_ground = False
-        self.ground = 500 # temporary ground level
-        self.position = pygame.math.Vector2(self.playerX, self.playerY)
-        self.velocity = pygame.math.Vector2(0, 0)
-        self.acceleration = pygame.math.Vector2(0, self.gravity)
+        # self.gravity = 0.6
+        # self.friction = -0.2 # lower more slippery
+        # self.max_velocity_x = 10
+        # self.max_velocity_y = 7
+        # self.acceleration_in_x = 1.4
+        # self.jump_speed = -16
+        # self.on_ground = False
+        # self.ground = 500 # temporary ground level
+        # self.position = pygame.math.Vector2(self.playerX, self.playerY)
+        # self.velocity = pygame.math.Vector2(0, 0)
+        # self.acceleration = pygame.math.Vector2(0, self.gravity)
         
         # Animation Variables
         self.is_idle = True
@@ -91,7 +96,7 @@ class Player(pygame.sprite.Sprite):
 
             self.image = self.jump_sprites[int(self.current_sprite)]
    
-
+    
     def get_input(self):
         keys = pygame.key.get_pressed()
 
@@ -110,15 +115,9 @@ class Player(pygame.sprite.Sprite):
             self.is_running_right = False
             self.is_running_left = False
             self.is_jumping = False
-    
-
-
-    def horizontal_movement(self, deltaTime):
-        keys = pygame.key.get_pressed() 
-        self.acceleration.x = 0
-
+        
         if keys[pygame.K_a]:
-            self.acceleration.x -= self.acceleration_in_x
+            self.rect.x -= self.speed
 
             self.is_idle = False
             self.is_running_right = False
@@ -126,55 +125,86 @@ class Player(pygame.sprite.Sprite):
             self.is_jumping = False
         
         if keys[pygame.K_d]:
-            self.acceleration.x += self.acceleration_in_x
+            self.rect.x += self.speed
 
             self.is_idle = False
             self.is_running_right = True
             self.is_running_left = False
-            self.is_jumping = False        
+            self.is_jumping = False
 
-        self.acceleration.x += self.velocity.x * self.friction
-        self.velocity.x += self.acceleration.x * deltaTime
-        self.limit_velocity(self.max_velocity_x)
-        self.position.x += self.velocity.x * deltaTime + (self.acceleration.x * 0.5) * deltaTime ** 2
-        self.rect.x = self.position.x
-
-    def vertical_movement(self, deltaTime):
-        keys = pygame.key.get_pressed()
-
-        if keys[pygame.K_w]:
-            self.jump()
-
-        self.velocity.y += self.acceleration.y * deltaTime
-        if self.velocity.y > self.max_velocity_y: self.velocity.y = self.max_velocity_y # limit max velocity
-
-        self.position.y += self.velocity.y * deltaTime + (self.acceleration.y * 0.5) * deltaTime ** 2
-        if self.position.y > self.ground: # limitar o player para o chão
-            self.on_ground = True
-            self.position.y = self.ground
-            self.velocity.y = 0
-
-        self.rect.bottom = self.position.y
-
-    def jump(self):
-
-        if self.on_ground:
-            self.velocity.y = self.jump_speed
-            self.on_ground = False
+        if keys[pygame.K_SPACE]:
 
             self.is_idle = False
             self.is_running_right = False
             self.is_running_left = False
             self.is_jumping = True
 
-    def limit_velocity(self, max_vel):
-        self.velocity.x = max(-max_vel, min(self.velocity.x, max_vel))
-        if abs(self.velocity.x) < 0.01: self.velocity.x = 0
+
+    
+
+
+    # def horizontal_movement(self, deltaTime):
+    #     keys = pygame.key.get_pressed() 
+    #     self.acceleration.x = 0
+
+    #     if keys[pygame.K_a]:
+    #         self.acceleration.x -= self.acceleration_in_x
+
+    #         self.is_idle = False
+    #         self.is_running_right = False
+    #         self.is_running_left = True
+    #         self.is_jumping = False
+        
+    #     if keys[pygame.K_d]:
+    #         self.acceleration.x += self.acceleration_in_x
+
+    #         self.is_idle = False
+    #         self.is_running_right = True
+    #         self.is_running_left = False
+    #         self.is_jumping = False        
+
+    #     self.acceleration.x += self.velocity.x * self.friction
+    #     self.velocity.x += self.acceleration.x * deltaTime
+    #     self.limit_velocity(self.max_velocity_x)
+    #     self.position.x += self.velocity.x * deltaTime + (self.acceleration.x * 0.5) * deltaTime ** 2
+    #     self.rect.x = self.position.x
+
+    # def vertical_movement(self, deltaTime):
+    #     keys = pygame.key.get_pressed()
+
+    #     if keys[pygame.K_w]:
+    #         self.jump()
+
+    #     self.velocity.y += self.acceleration.y * deltaTime
+    #     if self.velocity.y > self.max_velocity_y: self.velocity.y = self.max_velocity_y # limit max velocity
+
+    #     self.position.y += self.velocity.y * deltaTime + (self.acceleration.y * 0.5) * deltaTime ** 2
+    #     if self.position.y > self.ground: # limitar o player para o chão
+    #         self.on_ground = True
+    #         self.position.y = self.ground
+    #         self.velocity.y = 0
+
+    #     self.rect.bottom = self.position.y
+
+    # def jump(self):
+
+    #     if self.on_ground:
+    #         self.velocity.y = self.jump_speed
+    #         self.on_ground = False
+
+    #         self.is_idle = False
+    #         self.is_running_right = False
+    #         self.is_running_left = False
+    #         self.is_jumping = True
+
+    # def limit_velocity(self, max_vel):
+    #     self.velocity.x = max(-max_vel, min(self.velocity.x, max_vel))
+    #     if abs(self.velocity.x) < 0.01: self.velocity.x = 0
 
     def update(self, deltaTime):
-        # self.get_input()
-        self.horizontal_movement(deltaTime)
-        self.vertical_movement(deltaTime)
+        self.get_input()
+        # self.horizontal_movement(deltaTime)
+        # self.vertical_movement(deltaTime)
         self.animate()
 
 
