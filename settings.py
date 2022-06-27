@@ -16,7 +16,7 @@ class Settings:
         '                            ',
         '                            ',
         ' XX    XXX            XX    ',
-        ' XX                         ',
+        ' XX P                       ',
         ' XXXX         XX         XX ',
         ' XXXX       XX              ',
         ' XX    X  XXXX    XX  XX    ',
