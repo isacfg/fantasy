@@ -5,7 +5,6 @@ import pygame, sys
 
 # Importing classes
 from settings import Settings
-from player import Player
 from level import Level
 
 
@@ -22,14 +21,11 @@ if __name__ == '__main__':
     level = Level(settings.test_level_map, screen)
 
 
-    run = True
 
-    while run:
-        deltaTime = clock.tick(60) * 0.001 * settings.TARGET_FPS
+    while True:
 
         for event in pygame.event.get(): # watching for events
             if event.type == pygame.QUIT: # if the user clicked the close button
-                run = False # stop the game
                 pygame.quit() # close the window
                 sys.exit() # close the program
 
