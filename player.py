@@ -19,10 +19,10 @@ class Player(pygame.sprite.Sprite):
         self.rect.x += self.direction.x * self.speed
 
 
-        if keys[pygame.K_RIGHT]:
+        if keys[pygame.K_d]:
             self.direction.x = 1
 
-        elif keys[pygame.K_LEFT]:
+        elif keys[pygame.K_a]:
             self.direction.x = -1
 
         else:
