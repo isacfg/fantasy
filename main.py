@@ -5,7 +5,8 @@ import pygame, sys, time
 
 # Importing classes
 from settings import Settings
-from player import Player    
+from player import Player
+from level import Level
 
 class Game:
     def __init__(self):
@@ -14,8 +15,6 @@ class Game:
         self.player_sprite_group = pygame.sprite.Group()
         self.player_sprite_group.add(self.player_sprite)
 
-
-    
     
     def run_game(self, deltaTime):
         # all the code for the game
@@ -46,6 +45,9 @@ if __name__ == '__main__':
     screen = pygame.display.set_mode((settings.screen_width, settings.screen_height)) # criando a tela do jogo
     game = Game() # iniciando a classe Game
 
+    # level 
+    level = Level(settings.test_level_map, screen)
+
 
 
     while game.run:
@@ -60,6 +62,7 @@ if __name__ == '__main__':
         screen.fill(settings.bg_color) # filling the screen with a color
 
         game.run_game(deltaTime) # running the game
+        level.run()
 
         pygame.display.update() # updating the screen
         clock.tick(settings.FPS) # setting the FPS to 60
