@@ -1,129 +1,110 @@
-import pygame
-import os
+import pygame, os
 from settings import Settings
+from support import import_folder
 
 settings = Settings()
-sourceFilDir = os.path.dirname(os.path.abspath(__file__))
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self):
-        super().__init__() # calling the parent class constructor (Sprite)
-        self.player_width = 16 * 16
-        self.player_height = 18 * 16
-        self.playerX = settings.screen_width / 2 - self.player_width / 2
-        self.playerY = settings.screen_height / 2 - self.player_height / 2
-        self.speed = 2.5
-        self.animation_speed = 0.125
-
-        self.is_idle = True
-        self.is_running = False
-        self.is_jumping = False
-
-
-
-        # Load Idle Sprites
-        self.idle_sprites = []
-        for i in range(1, 7):
-            self.idle_sprites.append(pygame.image.load(os.path.join(sourceFilDir, 'assets\player\idle\knight (' + str(i) + ').png')))
+    def __init__(self, pos):
+        super().__init__()
+        self.import_character_assets()
+        self.frame_index = 0 # current sprite frame
+        self.animation_speed = 0.15 # animation speed
+        self.image = self.animations['idle'][self.frame_index]
+        self.rect = self.image.get_rect(topleft = pos)
         
-        for i in range(len(self.idle_sprites)):
-            self.idle_sprites[i] = pygame.transform.scale(self.idle_sprites[i], (self.player_width, self.player_height))
-    
+        # player movement
+        self.direction = pygame.math.Vector2(0, 0)
+        self.speed = 8
+        self.gravity = 0.8
+        self.jump_speed = -16
 
+        # player status
+        self.status = 'idle'
+        self.facing_right = True
+        self.on_ground = False
+        self.on_ceiling = False
+        self.on_left = False
+        self.on_right = False
 
-        # Load Running Sprites
-        self.running_sprites = []
-        for i in range(1, 9):
-            self.running_sprites.append(pygame.image.load(os.path.join(sourceFilDir, 'assets\player\k_run\knight (' + str(i) + ').png')))
+    def import_character_assets(self):
+        character_path = './assets/player/'
+        self.animations = {'idle': [], 'run': [], 'jump': [], 'fall': []}
 
-        for i in range(len(self.running_sprites)):
-            self.running_sprites[i] = pygame.transform.scale(self.running_sprites[i], (self.player_width, self.player_height))
-
-        
-        # Load Jump Sprites
-        self.jump_sprites = []
-        for i in range(1, 13):
-            self.jump_sprites.append(pygame.image.load(os.path.join(sourceFilDir, 'assets\player\jump\knight (' + str(i) + ').png')))
-        
-        for i in range(len(self.jump_sprites)):
-            self.jump_sprites[i] = pygame.transform.scale(self.jump_sprites[i], (self.player_width, self.player_height))
-
-        self.current_sprite = 0
-
-        # testar simplificação
-        if self.is_idle == True:
-            self.image = self.idle_sprites[int(self.current_sprite)]
-        if self.is_running == True:
-            self.image = self.running_sprites[int(self.current_sprite)]
-        if self.is_jumping == True:
-            self.image = self.jump_sprites[int(self.current_sprite)]
-
-        self.rect = self.image.get_rect()
-        self.rect.center = (self.playerX, self.playerY)
-
+        for animation in self.animations.keys():
+            full_path = character_path + animation
+            self.animations[animation] = import_folder(full_path)
 
     def animate(self):
-        if self.is_idle == True:
-            self.current_sprite += self.animation_speed
+        animation = self.animations[self.status]
 
-            if self.current_sprite >= len(self.idle_sprites):
-                self.current_sprite = 0
+        # loop frame index
+        self.frame_index += self.animation_speed
+        if self.frame_index >= len(animation):
+            self.frame_index = 0
 
-            self.image = self.idle_sprites[int(self.current_sprite)]
-        
-        if self.is_running == True:
-            self.current_sprite += self.animation_speed
+        image = animation[int(self.frame_index)]
+        if self.facing_right == True:
+            self.image = image
+        else:
+            flipped_image = pygame.transform.flip(image, True, False) # image, flip x, flip y
+            self.image = flipped_image
 
-            if self.current_sprite >= len(self.running_sprites):
-                self.current_sprite = 0
+        # set the rect # fixes floating above ground # fixes flickering
+        if self.on_ground and self.on_right:
+            self.rect = self.image.get_rect(bottomright = self.rect.bottomright)
+        elif self.on_ground and self.on_left:
+            self.rect = self.image.get_rect(bottomleft = self.rect.bottomleft)
+        elif self.on_ground:
+            self.rect = self.image.get_rect(midbottom = self.rect.midbottom)
 
-            self.image = self.running_sprites[int(self.current_sprite)]
-
-        if self.is_jumping == True:
-            self.current_sprite += self.animation_speed
-
-            if self.current_sprite >= len(self.jump_sprites):
-                self.current_sprite = 0
-
-            self.image = self.jump_sprites[int(self.current_sprite)]
+        elif self.on_ceiling and self.on_right:
+            self.rect = self.image.get_rect(topright = self.rect.topright)
+        elif self.on_ceiling and self.on_left:
+            self.rect = self.image.get_rect(topleft = self.rect.topleft)
+        elif self.on_ceiling:
+            self.rect = self.image.get_rect(midtop = self.rect.midtop)
 
     def get_input(self):
         keys = pygame.key.get_pressed()
 
-        if keys[pygame.K_w]:
-            self.rect.y -= self.speed
-
-            self.is_idle = True
-            self.is_running = False
-        
-        if keys[pygame.K_s]:
-            self.rect.y += self.speed
-
-            self.is_idle = True
-            self.is_running = False
-            self.is_jumping = False
-        
         if keys[pygame.K_a]:
-            self.rect.x -= self.speed
+            self.direction.x = -1
+            self.facing_right = False
 
-            self.is_idle = False
-            self.is_running = True
-            self.is_jumping = False
-        
-        if keys[pygame.K_d]:
-            self.rect.x += self.speed
+        elif keys[pygame.K_d]:
+            self.direction.x = 1
+            self.facing_right = True
 
-            self.is_idle = False
-            self.is_running = True
-            self.is_jumping = False
+        else:
+            self.direction.x = 0
 
-        if keys[pygame.K_SPACE]:
+        if keys[pygame.K_SPACE] and self.on_ground:
+            self.jump()
 
-            self.is_idle = False
-            self.is_running = False
-            self.is_jumping = True
+    def get_status(self): 
+        if self.direction.y < 0:
+            self.status = 'jump'
+
+        elif self.direction.y > 1: # 1 has to be bigger than gravity
+            self.status = 'fall'
+
+        else:
+            if self.direction.x != 0:
+                self.status = 'run'
+            else:
+                self.status = 'idle'
+
+
+    def apply_gravity(self):
+        self.direction.y += self.gravity
+        self.rect.y += self.direction.y
+
+    def jump(self):
+        self.direction.y = self.jump_speed
+        # self.rect.y += self.direction.y
 
     def update(self):
         self.get_input()
+        self.get_status()
         self.animate()
-        
