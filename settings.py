@@ -28,6 +28,8 @@ class Settings:
         self.screen_width = 1200
         # self.screen_height = 680
         self.screen_height = len(self.test_level_map) * self.tile_size
+        self.player_width = 19*3
+        self.player_height = 22*3
 
 
 

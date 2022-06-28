@@ -1,5 +1,8 @@
 from os import walk
 import pygame
+from settings import Settings
+
+settings = Settings()
 
 def import_folder(path):
     surface_list = []
@@ -8,7 +11,7 @@ def import_folder(path):
         for image in img_files:
             full_path = path + '/' + image
             image_surf = pygame.image.load(full_path).convert_alpha() # convert_alpha() is needed to make the image transparent
-            image_surf = pygame.transform.scale(image_surf, (19*3, 22*3))
+            image_surf = pygame.transform.scale(image_surf, (settings.player_width, settings.player_height))
             surface_list.append(image_surf)
 
     return surface_list
