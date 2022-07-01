@@ -44,11 +44,11 @@ class Level:
             fall_dust_particle = ParticleEffect(self.player.sprite.rect.midbottom - offset, 'land')
             self.dust_sprite.add(fall_dust_particle)
 
-    def setup_level(self, layout):
+    def setup_level(self, layout): # layout is a list of lists that represent the level
         self.tiles = pygame.sprite.Group()
         self.player = pygame.sprite.GroupSingle()
 
-        for row_index, row in enumerate(layout):
+        for row_index, row in enumerate(layout): # enumerate gives you the index and the value
             for col_index, cell in enumerate(row):
                 x = col_index * settings.tile_size
                 y = row_index * settings.tile_size                

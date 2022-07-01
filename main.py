@@ -21,7 +21,6 @@ if __name__ == '__main__':
     level = Level(settings.test_level_map, screen)
 
 
-
     while True:
 
         for event in pygame.event.get(): # watching for events
@@ -29,9 +28,11 @@ if __name__ == '__main__':
                 pygame.quit() # close the window
                 sys.exit() # close the program
 
-        screen.fill(settings.bg_color) # filling the screen with a color
 
+        screen.fill(settings.bg_color) # filling the screen with a color
         level.run()
+
+            
 
         pygame.display.update() # updating the screen
         clock.tick(settings.FPS) # setting the FPS to 60

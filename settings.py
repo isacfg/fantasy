@@ -1,4 +1,11 @@
 
+# Todo 
+# - Add a way to change the settings via menu
+# - Enemies
+# - Sounds
+# - Map design
+# - Remaining animations
+
 # Settings Variables
 
 class Settings:
@@ -23,6 +30,7 @@ class Settings:
         '       X  XXXX    XX  XXX   ',
         '    XXXX  XXXXXX  XX  XXXX  ',
         'XXXXXXXX  XXXXXX  XX  XXXX  ']
+
 
         self.tile_size = 64
         self.screen_width = 1200
