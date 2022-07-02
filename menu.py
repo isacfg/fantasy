@@ -1,4 +1,4 @@
-import pygame
+import pygame, sys
 from settings import Settings
 # from main import game_state_global
 
@@ -59,7 +59,7 @@ class Menu():
             pass
 
         if keys[pygame.K_RETURN] and self.selected_option == 4: # press ENTER to quit
-            pygame.quit()
+            sys.exit()
 
 
         if keys[pygame.K_DOWN] and self.selected_option == 1 and int(self.limit_user_input) > 1:
