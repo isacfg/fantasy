@@ -11,9 +11,9 @@
 class Settings:
     def __init__(self):
 
-        self.bg_color = (32, 32, 32)
+        self.bg_color = (11, 9, 17)
         self.FPS = 60
-        self.TARGET_FPS = 60
+        # self.TARGET_FPS = 60
         self.game_name = "Fantasy"
         self.game_version = "0.0.1"
         self.game_authors = "Isaac F. e Israel S."

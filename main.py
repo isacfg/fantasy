@@ -32,12 +32,15 @@ if __name__ == '__main__':
 
 
         if menu.game_state == 0:
+
             menu.main_menu()
             menu.draw_text(str(round(clock.get_fps(), 2)),'white', settings.screen_width - 50, 50, 14)
 
 
         # Game
         if menu.game_state == 1:
+
+            
             screen.fill(settings.bg_color) # filling the screen with a color
             level.run()
             # faz o fps aparecer na tela
