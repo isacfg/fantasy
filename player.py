@@ -1,8 +1,13 @@
 import pygame, os
 from settings import Settings
 from support import import_folder
+from menu import Menu
+
+from global_variables import get_game_state, set_game_state
+
 
 settings = Settings()
+menu = Menu(0)
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos, surface, create_jump_particles):
@@ -94,6 +99,10 @@ class Player(pygame.sprite.Sprite):
 
     def get_input(self):
         keys = pygame.key.get_pressed()
+
+        if keys[pygame.K_ESCAPE]:
+            set_game_state(0)
+
 
         if keys[pygame.K_a]:
             self.direction.x = -1

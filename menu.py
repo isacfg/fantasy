@@ -1,11 +1,13 @@
 import pygame
-
 from settings import Settings
+# from main import game_state_global
+
+from global_variables import get_game_state, set_game_state
+
 
 settings = Settings()
 
-# todo
-# change font 
+
 
 class Menu():
     def __init__(self, window):
@@ -24,7 +26,7 @@ class Menu():
         self.background_rect = self.background.get_rect(topleft = (0,-0))
 
 
-        self.game_state = 0 # 0 is the menu screen
+        # self.game_state = 0 # 0 is the menu screen
         self.selected_option = 1 # 1 is the play option
 
         # positions
@@ -36,61 +38,71 @@ class Menu():
         self.text_y_3 = self.text_y_2 + self.text_y_offset
         self.text_y_4 = self.text_y_3 + self.text_y_offset
 
-        self.arrow_offset = -15
+        self.arrow_offset = 0
 
         self.arrow_image = pygame.image.load('assets/arrow.png')
         self.arrow_image = pygame.transform.scale(self.arrow_image, (18.6667 * 1.5, 21.33334 * 1.5))
-        self.arrow_image_rect =  self.arrow_image.get_rect(topleft = (500, self.text_y_1 - 15))
+        self.arrow_image_rect =  self.arrow_image.get_rect(topleft = (520, 285))
+
 
     def get_input(self):
         keys = pygame.key.get_pressed()
         self.limit_user_input += 0.5
 
         if keys[pygame.K_RETURN] and self.selected_option == 1: # press ENTER to play
-            self.game_state = 1
+            set_game_state(1)
+
+        if keys[pygame.K_RETURN] and self.selected_option == 2: # press ENTER to controls
+            pass
+
+        if keys[pygame.K_RETURN] and self.selected_option == 3: # press ENTER to credits
+            pass
+
+        if keys[pygame.K_RETURN] and self.selected_option == 4: # press ENTER to quit
+            pygame.quit()
+
 
         if keys[pygame.K_DOWN] and self.selected_option == 1 and int(self.limit_user_input) > 1:
-            self.arrow_image_rect.y = self.text_y_2 - self.arrow_offset - 30
-            self.arrow_image_rect.x = self.arrow_image_rect.x - 5
-            self.selected_option = 2
+            self.arrow_image_rect.y = 360 # y of controls
+            self.arrow_image_rect.x = 485 # x of controls
+            self.selected_option = 2 # 2 is the controls option
             self.limit_user_input = 0
-            print('KEYDOWN 1')
+           
 
         if keys[pygame.K_DOWN] and self.selected_option == 2 and int(self.limit_user_input) > 1:
-            self.arrow_image_rect.y = self.text_y_3 - self.arrow_offset - 30
-            self.arrow_image_rect.x = 490
-            self.selected_option = 3
+            self.arrow_image_rect.y = 435 # y of credits
+            self.arrow_image_rect.x = 495 # x of credits
+            self.selected_option = 3 # 3 is the credits option
             self.limit_user_input = 0
-            print('KEYDOWN 2')
+
 
         if keys[pygame.K_DOWN] and self.selected_option == 3 and int(self.limit_user_input) > 1:
-            self.arrow_image_rect.y = self.text_y_4 - self.arrow_offset - 30
-            self.arrow_image_rect.x = self.arrow_image_rect.x - 5
-            self.selected_option = 4
+            self.arrow_image_rect.y = 510 # y of quit
+            self.arrow_image_rect.x = 520  # x of quit
+            self.selected_option = 4 # 4 is the quit option
             self.limit_user_input = 0
-            print('KEYDOWN 3')
+
 
         if keys[pygame.K_UP] and self.selected_option == 2 and int(self.limit_user_input) > 1:
-            self.arrow_image_rect.y = self.text_y_1 - self.arrow_offset - 30
-            self.arrow_image_rect.x = self.arrow_image_rect.x - 5
-            self.selected_option = 1
+            self.arrow_image_rect.y = 285 # y of play
+            self.arrow_image_rect.x = 520 # x of play
+            self.selected_option = 1 # 1 is the play option
             self.limit_user_input = 0
-            print('KEYUP 1')
+
 
         if keys[pygame.K_UP] and self.selected_option == 3 and int(self.limit_user_input) > 1:
-            self.arrow_image_rect.y = self.text_y_2 - self.arrow_offset - 30
-            self.arrow_image_rect.x = self.arrow_image_rect.x - 5
-            self.selected_option = 2
+            self.arrow_image_rect.y = 360 # y of controls
+            self.arrow_image_rect.x = 485 # x of controls
+            self.selected_option = 2 # 2 is the controls option
             self.limit_user_input = 0
-            print('KEYUP 2')
-        
+
+
         if keys[pygame.K_UP] and self.selected_option == 4 and int(self.limit_user_input) > 1:
-            self.arrow_image_rect.y = self.text_y_3 - self.arrow_offset - 30
-            self.arrow_image_rect.x = 490
-            self.selected_option = 3
+            self.arrow_image_rect.y = 435 # y of credits
+            self.arrow_image_rect.x = 495 # x of credits
+            self.selected_option = 3 # 3 is the credits option
             self.limit_user_input = 0
-            print('KEYUP 3')
-      
+
 
     def draw_text(self,text,color,x,y, font_size):
         self.font = pygame.font.Font(self.font_name, font_size) # fontname, size
