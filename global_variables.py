@@ -1,5 +1,5 @@
 global game_state
-game_state = 1
+game_state = 0
 
 def get_game_state():
     return game_state

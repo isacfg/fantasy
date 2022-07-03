@@ -53,10 +53,10 @@ class Level:
                 x = col_index * settings.tile_size
                 y = row_index * settings.tile_size                
             
-                if cell == 'X':
+                if cell == 'X': # walls 
                     tile = Tile((x,y), settings.tile_size)
                     self.tiles.add(tile)
-                if cell == 'P':
+                if cell == 'P': # spawna jogador
                     player_sprite = Player((x,y), self.display_surface, self.create_jump_particles)
                     self.player.add(player_sprite)
 
@@ -94,10 +94,10 @@ class Level:
                     self.current_x = player.rect.right
 
         # fixes player position and player flickering
-        if player.on_left and (player.rect.left < self.current_x or player.direction.x >= 0):
-            player.on_left = False
-        if player.on_right and (player.rect.right > self.current_x or player.direction.x <= 0):
-            player.on_right = False
+        # if player.on_left and (player.rect.left < self.current_x or player.direction.x >= 0):
+        #     player.on_left = False
+        # if player.on_right and (player.rect.right > self.current_x or player.direction.x <= 0):
+        #     player.on_right = False
 
     def vertical_movement_collision(self):
         player = self.player.sprite
