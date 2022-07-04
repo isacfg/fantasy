@@ -19,10 +19,10 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(topleft = pos)
         
         # dust particles
-        # self.import_dust_run_particles()
-        # self.dust_frame_index = 0 # current sprite frame
-        # self.dust_animation_speed = 0.15 # animation speed
-        # self.display_surface = surface
+        self.import_dust_run_particles()
+        self.dust_frame_index = 0 # current sprite frame
+        self.dust_animation_speed = 0.15 # animation speed
+        self.display_surface = surface
         # self.create_jump_particles = create_jump_particles
 
         # player movement
@@ -61,25 +61,25 @@ class Player(pygame.sprite.Sprite):
             full_path = character_path + animation
             self.animations[animation] = import_folder(full_path, True) # True to scale to seetings player width and height, useful por que particulas nao precisam escalar
 
-    # def import_dust_run_particles(self): # run particles
-    #     self.dust_run_particles = import_folder('./assets/player/dust_particles/run')
+    def import_dust_run_particles(self): # run particles
+        self.dust_run_particles = import_folder('./assets/player/dust_particles/run')
 
-    # def run_dust_animation(self):
-    #     if self.status == 'run' and self.on_ground:
-    #         self.dust_frame_index += self.dust_animation_speed
-    #         if self.dust_frame_index >= len(self.dust_run_particles):
-    #             self.dust_frame_index = 0
+    def run_dust_animation(self):
+        if self.status == 'run' and self.on_ground:
+            self.dust_frame_index += self.dust_animation_speed
+            if self.dust_frame_index >= len(self.dust_run_particles):
+                self.dust_frame_index = 0
 
-    #         dust_particle = self.dust_run_particles[int(self.dust_frame_index)]
+            dust_particle = self.dust_run_particles[int(self.dust_frame_index)]
 
-    #         if self.facing_right:
-    #             pos = self.rect.bottomleft - pygame.math.Vector2(6, 10)
-    #             self.display_surface.blit(dust_particle, pos)
+            if self.facing_right:
+                pos = self.rect.bottomleft - pygame.math.Vector2(6, 10)
+                self.display_surface.blit(dust_particle, pos)
 
-    #         if self.facing_right == False:
-    #             pos = self.rect.bottomright - pygame.math.Vector2(6, 10)
-    #             flipped_dust_particle = pygame.transform.flip(dust_particle, True, False)
-    #             self.display_surface.blit(flipped_dust_particle, pos)
+            if self.facing_right == False:
+                pos = self.rect.bottomright - pygame.math.Vector2(6, 10)
+                flipped_dust_particle = pygame.transform.flip(dust_particle, True, False)
+                self.display_surface.blit(flipped_dust_particle, pos)
 
     def animate(self):
         animation = self.animations[self.status]
@@ -98,25 +98,6 @@ class Player(pygame.sprite.Sprite):
         else:
             flipped_image = pygame.transform.flip(image, True, False) # image, flip x, flip y
             self.image = flipped_image
-
-
-
-
-        # set the rect # fixes floating above ground # fixes flickering
-        # if self.on_ground and self.on_right:
-        #     self.rect = self.image.get_rect(bottomright = self.rect.bottomright)
-        # elif self.on_ground and self.on_left:
-        #     self.rect = self.image.get_rect(bottomleft = self.rect.bottomleft)
-        # elif self.on_ground:
-        #     self.rect = self.image.get_rect(midbottom = self.rect.midbottom)
-
-        # elif self.on_ceiling and self.on_right:
-        #     self.rect = self.image.get_rect(topright = self.rect.topright)
-        # elif self.on_ceiling and self.on_left:
-        #     self.rect = self.image.get_rect(topleft = self.rect.topleft)
-        # elif self.on_ceiling:
-        #     self.rect = self.image.get_rect(midtop = self.rect.midtop)
-
 
 
     def get_input(self):
@@ -174,5 +155,4 @@ class Player(pygame.sprite.Sprite):
         self.get_input()
         self.get_status()
         self.animate()
-        # self.run_dust_animation()
-        # print(self.dust_run_particles)
+        self.run_dust_animation()
