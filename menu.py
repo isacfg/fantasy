@@ -1,13 +1,8 @@
-from turtle import back
 import pygame, sys
 from settings import Settings
-# from main import game_state_global
-
-from global_variables import get_game_state, set_game_state
-
+from global_variables import *
 
 settings = Settings()
-
 
 class Menu():
     def __init__(self, window):
@@ -15,15 +10,13 @@ class Menu():
         self.font_name = './assets/fonts/PressStart2P-Regular.ttf'
         self.font_size_big = 30
         self.font_size_medium = 18
-
-		# background
-        self.background_shift = .8
-        self.shift_acumulator = 0
         self.limit_user_input = 0
 
+
+        # background
         self.background = pygame.image.load('assets/bg.png')
-        self.background = pygame.transform.scale(self.background, (settings.screen_width, settings.screen_height))
         self.background_rect = self.background.get_rect(topleft = (0,-0))
+
 
 
         # self.game_state = 0 # 0 is the menu screen
@@ -43,7 +36,6 @@ class Menu():
         self.arrow_image = pygame.image.load('assets/arrow.png')
         self.arrow_image = pygame.transform.scale(self.arrow_image, (18.6667 * 1.5, 21.33334 * 1.5))
         self.arrow_image_rect =  self.arrow_image.get_rect(topleft = (520, 285))
-
 
     def get_input(self):
         keys = pygame.key.get_pressed()
@@ -103,7 +95,6 @@ class Menu():
             self.selected_option = 3 # 3 is the credits option
             self.limit_user_input = 0
 
-
     def draw_text(self,text,color,x,y, font_size):
         self.font = pygame.font.Font(self.font_name, font_size) # fontname, size
 
@@ -112,34 +103,22 @@ class Menu():
         self.text_rect.center = (x,y)
         self.screen.blit(self.text_obj, self.text_rect)
 
-    def draw_background(self):
-        self.screen.blit(self.background, (self.background_rect.x, self.background_rect.y))
-
-        # self.shift_acumulator = self.shift_acumulator - self.background_shift
-        # self.background_rect.x = int(self.shift_acumulator)
-        
-        # if (self.background_rect.x <= 0 or self.background_rect.x >= -8):
-        #     self.backgroundF = pygame.transform.flip(self.background, True, False) # image, flip x, flip y
-        #     self.screen.blit(self.backgroundF, (self.background_rect.x + settings.screen_width, self.background_rect.y))
-        #     if self.background_rect.x <= -1000:
-        #         self.backgroundF = self.background
-        #         self.background_rect.x = 0
-        #         self.shift_acumulator = 0
-
-
-    def main_menu(self):
-        self.screen.fill(settings.bg_color)
-        self.draw_background()
-        self.get_input()
-
+    def main_texts(self):
         # Texts
-        self.draw_text('MAIN MENU', 'white', self.screen_center , 125, self.font_size_big) #text, color, x,y, font size
+        self.draw_text('MEOW FANTASY', 'white', self.screen_center , 125, self.font_size_big) #text, color, x,y, font size
         self.draw_text('PLAY', 'white', self.screen_center, self.text_y_1 , self.font_size_medium)
         self.draw_text('CONTROLS', 'white', self.screen_center, self.text_y_2, self.font_size_medium)
         self.draw_text('CREDITS', 'white', self.screen_center, self.text_y_3, self.font_size_medium)
         self.draw_text('QUIT', 'white', self.screen_center, self.text_y_4, self.font_size_medium)
+    
+    def run(self):
+        # self.screen.fill(settings.bg_color)
+        self.screen.blit(self.background, (self.background_rect.x, self.background_rect.y))
+        self.get_input()
 
+        # textos
+        self.main_texts()
 
+        # arrow
         self.screen.blit(self.arrow_image, (self.arrow_image_rect.x, self.arrow_image_rect.y)) 
-        # print(f"BACKGROUND X:{self.background_rect.x}")  
-        # print(self.limit_user_input)     
+

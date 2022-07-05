@@ -1,16 +1,14 @@
 import pygame, os
 from settings import Settings
-from support import import_folder
-from menu import Menu
+from importer import import_folder
 
 from global_variables import get_game_state, set_game_state
 
 
 settings = Settings()
-menu = Menu(0)
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, pos, surface, create_jump_particles):
+    def __init__(self, pos, surface):
         super().__init__()
         self.import_character_assets()
         self.frame_index = 0 # current sprite frame
@@ -23,7 +21,6 @@ class Player(pygame.sprite.Sprite):
         self.dust_frame_index = 0 # current sprite frame
         self.dust_animation_speed = 0.15 # animation speed
         self.display_surface = surface
-        self.create_jump_particles = create_jump_particles
 
         # player movement
         self.direction = pygame.math.Vector2(0, 0)
@@ -39,7 +36,6 @@ class Player(pygame.sprite.Sprite):
         self.on_left = False
         self.on_right = False
 
-        self.is_attacking = False
 
     def import_character_assets(self):
         character_path = './assets/player/'
@@ -88,9 +84,6 @@ class Player(pygame.sprite.Sprite):
         self.frame_index += self.animation_speed 
         if self.frame_index >= len(animation):
             self.frame_index = 0
-            if self.is_attacking == True:
-                self.frame_index = 0
-                self.is_attacking = False
 
         image = animation[int(self.frame_index)]
         if self.facing_right == True:
@@ -106,12 +99,11 @@ class Player(pygame.sprite.Sprite):
         if keys[pygame.K_ESCAPE]:
             set_game_state(0) # menu
 
-
-        if keys[pygame.K_a] and self.is_attacking == False:
+        if keys[pygame.K_a]:
             self.direction.x = -1
             self.facing_right = False
 
-        elif keys[pygame.K_d] and self.is_attacking == False:
+        elif keys[pygame.K_d]:
             self.direction.x = 1
             self.facing_right = True
 
@@ -119,12 +111,10 @@ class Player(pygame.sprite.Sprite):
             self.direction.x = 0
 
         if keys[pygame.K_g]: # test animations
-            self.is_attacking = True
             self.status = 'death'
 
         if keys[pygame.K_SPACE] and self.on_ground:
             self.jump()
-            self.create_jump_particles(self.rect.midbottom)
 
     def get_status(self): 
         if self.direction.y < 0:
@@ -136,9 +126,6 @@ class Player(pygame.sprite.Sprite):
         else:
             if self.direction.x != 0:
                 self.status = 'run'
-            
-            elif self.is_attacking == True:
-                self.status = 'death'
 
             else:
                 self.status = 'idle' # default animation
@@ -149,7 +136,6 @@ class Player(pygame.sprite.Sprite):
 
     def jump(self):
         self.direction.y = self.jump_speed
-        # self.rect.y += self.direction.y
 
     def update(self):
         self.get_input()
