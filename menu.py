@@ -1,3 +1,4 @@
+from turtle import back
 import pygame, sys
 from settings import Settings
 # from main import game_state_global
@@ -8,7 +9,6 @@ from global_variables import get_game_state, set_game_state
 settings = Settings()
 
 
-
 class Menu():
     def __init__(self, window):
         self.screen = window
@@ -17,7 +17,7 @@ class Menu():
         self.font_size_medium = 18
 
 		# background
-        self.background_shift = 8
+        self.background_shift = .8
         self.shift_acumulator = 0
         self.limit_user_input = 0
 
@@ -47,7 +47,7 @@ class Menu():
 
     def get_input(self):
         keys = pygame.key.get_pressed()
-        self.limit_user_input += 0.5
+        self.limit_user_input += 0.9
 
         if keys[pygame.K_RETURN] and self.selected_option == 1: # press ENTER to play
             set_game_state(1)
@@ -60,7 +60,7 @@ class Menu():
 
         if keys[pygame.K_RETURN] and self.selected_option == 4: # press ENTER to quit
             sys.exit()
-
+        
 
         if keys[pygame.K_DOWN] and self.selected_option == 1 and int(self.limit_user_input) > 1:
             self.arrow_image_rect.y = 360 # y of controls
@@ -114,12 +114,17 @@ class Menu():
 
     def draw_background(self):
         self.screen.blit(self.background, (self.background_rect.x, self.background_rect.y))
+
         # self.shift_acumulator = self.shift_acumulator - self.background_shift
         # self.background_rect.x = int(self.shift_acumulator)
         
         # if (self.background_rect.x <= 0 or self.background_rect.x >= -8):
         #     self.backgroundF = pygame.transform.flip(self.background, True, False) # image, flip x, flip y
         #     self.screen.blit(self.backgroundF, (self.background_rect.x + settings.screen_width, self.background_rect.y))
+        #     if self.background_rect.x <= -1000:
+        #         self.backgroundF = self.background
+        #         self.background_rect.x = 0
+        #         self.shift_acumulator = 0
 
 
     def main_menu(self):
@@ -134,13 +139,7 @@ class Menu():
         self.draw_text('CREDITS', 'white', self.screen_center, self.text_y_3, self.font_size_medium)
         self.draw_text('QUIT', 'white', self.screen_center, self.text_y_4, self.font_size_medium)
 
-        # temporary
-        # self.mx, self.my = pygame.mouse.get_pos()
-        # self.draw_text('*','white', self.mx, self.my, 25)
-        # self.button_1 = pygame.Rect(50,100,200,50)
-        # pygame.draw.rect(self.screen, (255,0,0), self.button_1)
-
 
         self.screen.blit(self.arrow_image, (self.arrow_image_rect.x, self.arrow_image_rect.y)) 
         # print(f"BACKGROUND X:{self.background_rect.x}")  
-        # print(self.limit_user_input)         
+        # print(self.limit_user_input)     
