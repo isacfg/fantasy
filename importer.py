@@ -13,6 +13,7 @@ def import_folder(path, needs_to_scale = False):
             image_surf = pygame.image.load(full_path).convert_alpha() # convert_alpha() is needed to make the image transparent
             if needs_to_scale:
                 image_surf = pygame.transform.scale(image_surf, (settings.player_width, settings.player_height))
+
             surface_list.append(image_surf)
 
     return surface_list
