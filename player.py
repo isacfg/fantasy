@@ -16,19 +16,19 @@ class Player(pygame.sprite.Sprite):
         self.image = self.animations['idle'][self.frame_index]
         self.rect = self.image.get_rect(topleft = pos)
         
-        # dust particles
+        # particulas de correr
         self.import_dust_run_particles()
         self.dust_frame_index = 0 # current sprite frame
         self.dust_animation_speed = 0.15 # animation speed
         self.display_surface = surface
 
-        # player movement
+        # physics
         self.direction = pygame.math.Vector2(0, 0)
         self.speed = 8
         self.gravity = 0.8
         self.jump_speed = -16
 
-        # player status
+        # status
         self.status = 'idle'
         self.facing_right = True
         self.on_ground = False
@@ -83,14 +83,14 @@ class Player(pygame.sprite.Sprite):
         # loop frame index
         self.frame_index += self.animation_speed 
         if self.frame_index >= len(animation):
-            self.frame_index = 0
+            self.frame_index = 0 # loop
 
         image = animation[int(self.frame_index)]
         if self.facing_right == True:
             self.image = image
         else:
-            flipped_image = pygame.transform.flip(image, True, False) # image, flip x, flip y
-            self.image = flipped_image
+            f_image = pygame.transform.flip(image, True, False) # image, flip x, flip y
+            self.image = f_image
 
 
     def get_input(self):

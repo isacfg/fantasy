@@ -5,7 +5,7 @@ pygame.font.init()
 
 # Importing classes
 from settings import Settings
-from level import Level
+from jogo import Jogo
 from menu import Menu
 
 from global_variables import *
@@ -20,20 +20,20 @@ if __name__ == '__main__':
     screen = pygame.display.set_mode((settings.screen_width, settings.screen_height)) # criando a tela do jogo
 
     # game 
-    level = Level(settings.test_level_map, screen)
+    level = Jogo(settings.test_level_map, screen)
     menu = Menu(screen)
 
     while True:
 
         for event in pygame.event.get(): # watching for events
-            if event.type == pygame.QUIT: # if the user clicked the close button
+            if event.type == pygame.QUIT: # if the user clicked the close button, fecha o jogo
                 pygame.quit() # close the window
                 sys.exit() # close the program
 
 
-        if get_game_state() == 0:
+        if get_game_state() == 0: # global variable diz em qual tela the game is
 
-            menu.main_menu()
+            menu.run()
             menu.draw_text(str(round(clock.get_fps(), 2)),'white', settings.screen_width - 50, 50, 14)
 
 
