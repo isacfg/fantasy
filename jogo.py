@@ -4,12 +4,12 @@ from settings import Settings
 from player import Player
 
 settings = Settings()
-class Level:
-    def __init__(self, level_data, surface):
+class Jogo:
+    def __init__(self, mapa_test, surface):
 
         # level setup
         self.display_surface = surface
-        self.setup_level(level_data) # cria o mundo através do layout das configurações
+        self.setup_level(mapa_test) # cria o mundo através do layout das configurações
         self.world_shift = -0 # moves the level
         self.current_x = 0
 
@@ -38,12 +38,12 @@ class Level:
                     player_sprite = Player((x,y), self.display_surface)
                     self.player.add(player_sprite)
 
-    def scroll_x(self):
+    def scroll_x(self): # ilusao de camera, muda velocidade do mundo
         player = self.player.sprite
         player_x = player.rect.centerx
         direction_x = player.direction.x
 
-        if player_x < settings.screen_width / 4 and direction_x < 0:
+        if player_x < settings.screen_width / 4 and direction_x < 0: # 4 is one quarter of the screen, chegando ai a camera se mexe e o player fica parado para criar ilusao de camera
             self.world_shift = 8
             player.speed = 0
         
@@ -55,7 +55,7 @@ class Level:
             self.world_shift = 0
             player.speed = 8
 
-    def horizontal_movement_collision(self):
+    def h_colision(self):
         player = self.player.sprite
         player.rect.x += player.direction.x * player.speed
 
@@ -71,13 +71,13 @@ class Level:
                     player.on_right = True
                     self.current_x = player.rect.right
 
-        # fixes player position and player flickering
-        if player.on_left and (player.rect.left < self.current_x or player.direction.x >= 0):
-            player.on_left = False
-        if player.on_right and (player.rect.right > self.current_x or player.direction.x <= 0):
-            player.on_right = False
+        # conserta o bug da colisao com o chao
+        # if player.on_left and (player.rect.left < self.current_x or player.direction.x >= 0):
+        #     player.on_left = False
+        # if player.on_right and (player.rect.right > self.current_x or player.direction.x <= 0):
+        #     player.on_right = False
 
-    def vertical_movement_collision(self):
+    def v_colision(self):
         player = self.player.sprite
         player.apply_gravity()
 
@@ -109,7 +109,7 @@ class Level:
 
         # player
         self.player.update()
-        self.horizontal_movement_collision()
+        self.h_colision()
         self.get_player_on_ground()
-        self.vertical_movement_collision()
+        self.v_colision()
         self.player.draw(self.display_surface)
