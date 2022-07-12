@@ -20,7 +20,7 @@ array_strings = []
 def generate_random_map():
     for i in range(20):
         random_number = random.randint(1, 14)
-        if random_number == 1:
+        if random_number == 2:
             mapa['1l'].append('X')
             mapa['1l'].append('X')
             mapa['1l'].append('X')
@@ -29,20 +29,20 @@ def generate_random_map():
             mapa['1l'].append(' ')
             mapa['1l'].append(' ')
 
-    for i in range(20):
-        random_number = random.randint(1, 16)
-        if random_number == 1:
-            mapa['2l'].append('X')
-            mapa['2l'].append('X')
-            mapa['2l'].append('X')
+    # for i in range(20):
+    #     random_number = random.randint(1, 16)
+    #     if random_number == 2:
+    #         mapa['2l'].append('X')
+    #         mapa['2l'].append('X')
+    #         mapa['2l'].append('X')
         
-        else:
-            mapa['2l'].append(' ')
-            mapa['2l'].append(' ')
+    #     else:
+    #         mapa['2l'].append(' ')
+    #         mapa['2l'].append(' ')
 
     for i in range(20):
         random_number = random.randint(1, 16)
-        if random_number == 1:
+        if random_number == 2:
             mapa['3l'].append('X')
             mapa['3l'].append('X')
             mapa['3l'].append('X')
@@ -51,20 +51,20 @@ def generate_random_map():
             mapa['3l'].append(' ')
             mapa['3l'].append(' ')
 
-    for i in range(20):
-        random_number = random.randint(1, 18)
-        if random_number == 1:
-            mapa['4l'].append('X')
-            mapa['4l'].append('X')
-            mapa['4l'].append('X')
+    # for i in range(20):
+    #     random_number = random.randint(1, 18)
+    #     if random_number == 2:
+    #         mapa['4l'].append('X')
+    #         mapa['4l'].append('X')
+    #         mapa['4l'].append('X')
         
-        else:
-            mapa['4l'].append(' ')
-            mapa['4l'].append(' ')
+    #     else:
+    #         mapa['4l'].append(' ')
+    #         mapa['4l'].append(' ')
 
     for i in range(20):
         random_number = random.randint(1, 16)
-        if random_number == 1:
+        if random_number == 2:
             mapa['5l'].append('X')
             mapa['5l'].append('X')
             mapa['5l'].append('X')
@@ -73,20 +73,20 @@ def generate_random_map():
             mapa['5l'].append(' ')
             mapa['5l'].append(' ')
 
-    for i in range(20):
-        random_number = random.randint(1, 20)
-        if random_number == 1:
-            mapa['6l'].append('X')
-            mapa['6l'].append('X')
-            mapa['6l'].append('X')
+    # for i in range(20):
+    #     random_number = random.randint(1, 20)
+    #     if random_number == 2:
+    #         mapa['6l'].append('X')
+    #         mapa['6l'].append('X')
+    #         mapa['6l'].append('X')
         
-        else:
-            mapa['6l'].append(' ')
-            mapa['6l'].append(' ')
+    #     else:
+    #         mapa['6l'].append(' ')
+    #         mapa['6l'].append(' ')
 
     for i in range(20):
-        random_number = random.randint(1, 16)
-        if random_number == 1:
+        random_number = random.randint(1, 10)
+        if random_number == 2:
             mapa['7l'].append('X')
             mapa['7l'].append('X')
             mapa['7l'].append('X')
@@ -95,20 +95,20 @@ def generate_random_map():
             mapa['7l'].append(' ')
             mapa['7l'].append(' ')
 
-    for i in range(20):
-        random_number = random.randint(1, 15)
-        if random_number == 1:
-            mapa['8l'].append('X')
-            mapa['8l'].append('X')
-            mapa['8l'].append('X')
+    # for i in range(20):
+    #     random_number = random.randint(1, 15)
+    #     if random_number == 2:
+    #         mapa['8l'].append('X')
+    #         mapa['8l'].append('X')
+    #         mapa['8l'].append('X')
         
-        else:
-            mapa['8l'].append(' ')
-            mapa['8l'].append(' ')
+    #     else:
+    #         mapa['8l'].append(' ')
+    #         mapa['8l'].append(' ')
 
     for i in range(20):
-        random_number = random.randint(1, 14)
-        if random_number == 1:
+        random_number = random.randint(1, 6)
+        if random_number == 2:
             mapa['9l'].append('X')
             mapa['9l'].append('X')
             mapa['9l'].append('X')
@@ -117,20 +117,20 @@ def generate_random_map():
             mapa['9l'].append(' ')
             mapa['9l'].append(' ')
 
-    for i in range(20):
-        random_number = random.randint(1, 8)
-        if random_number == 1:
-            mapa['10l'].append('X')
-            mapa['10l'].append('X')
-            mapa['10l'].append('X')
+    # for i in range(20):
+    #     random_number = random.randint(1, 8)
+    #     if random_number == 2:
+    #         mapa['10l'].append('X')
+    #         mapa['10l'].append('X')
+    #         mapa['10l'].append('X')
         
-        else:
-            mapa['10l'].append(' ')
-            mapa['10l'].append(' ')
+    #     else:
+    #         mapa['10l'].append(' ')
+    #         mapa['10l'].append(' ')
         
     for i in range(20):
         random_number = random.randint(1, 6)
-        if random_number == 1:
+        if random_number == 2:
             mapa['11l'].append('X')
             mapa['11l'].append('X')
             mapa['11l'].append('X')
