@@ -26,17 +26,19 @@ class Jogo:
         self.tiles = pygame.sprite.Group()
         self.player = pygame.sprite.GroupSingle()
 
+        self.is_player_generated = False
         for row_index, row in enumerate(layout): # enumerate gives you the index and the value
             for col_index, cell in enumerate(row):
                 x = col_index * settings.tile_size
                 y = row_index * settings.tile_size                
             
                 if cell == 'X':
-                    tile = Tile((x,y), settings.tile_size)
+                    tile = Tile((x,y), settings.tile_size, 1) # 1 is the type of tile (value will be random) 1-4
                     self.tiles.add(tile)
-                if cell == 'P':
-                    player_sprite = Player((x,y), self.display_surface)
-                    self.player.add(player_sprite)
+       
+        # adds player na tela
+        player_sprite = Player((500,0), self.display_surface)
+        self.player.add(player_sprite)
 
     def scroll_x(self): # ilusao de camera, muda velocidade do mundo
         player = self.player.sprite
@@ -71,11 +73,6 @@ class Jogo:
                     player.on_right = True
                     self.current_x = player.rect.right
 
-        # conserta o bug da colisao com o chao
-        # if player.on_left and (player.rect.left < self.current_x or player.direction.x >= 0):
-        #     player.on_left = False
-        # if player.on_right and (player.rect.right > self.current_x or player.direction.x <= 0):
-        #     player.on_right = False
 
     def v_colision(self):
         player = self.player.sprite

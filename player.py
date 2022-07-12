@@ -10,20 +10,20 @@ settings = Settings()
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos, surface):
         super().__init__()
-        self.import_character_assets()
+        self.import_player_sprites()
         self.frame_index = 0 # current sprite frame
         self.animation_speed = 0.15 # animation speed
         self.image = self.animations['idle'][self.frame_index]
         self.rect = self.image.get_rect(topleft = pos)
         
         # particulas de correr
-        self.import_dust_run_particles()
+        self.import_run()
         self.dust_frame_index = 0 # current sprite frame
         self.dust_animation_speed = 0.15 # animation speed
         self.display_surface = surface
 
         # physics
-        self.direction = pygame.math.Vector2(0, 0)
+        self.direction = pygame.math.Vector2(0, 0) # vetores facilitam a soma de x,y
         self.speed = 8
         self.gravity = 0.8
         self.jump_speed = -16
@@ -37,7 +37,7 @@ class Player(pygame.sprite.Sprite):
         self.on_right = False
 
 
-    def import_character_assets(self):
+    def import_player_sprites(self):
         character_path = './assets/player/'
         self.animations = {
             'idle': [], 
@@ -57,7 +57,7 @@ class Player(pygame.sprite.Sprite):
             full_path = character_path + animation
             self.animations[animation] = import_folder(full_path, True) # True to scale to seetings player width and height, useful por que particulas nao precisam escalar
 
-    def import_dust_run_particles(self): # run particles
+    def import_run(self): # run particles
         self.dust_run_particles = import_folder('./assets/player/dust_particles/run')
 
     def run_dust_animation(self):

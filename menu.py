@@ -39,7 +39,7 @@ class Menu():
 
     def get_input(self):
         keys = pygame.key.get_pressed()
-        self.limit_user_input += 0.9
+        self.limit_user_input += 0.4
 
         if keys[pygame.K_RETURN] and self.selected_option == 1: # press ENTER to play
             set_game_state(1)
@@ -112,7 +112,7 @@ class Menu():
         self.draw_text('QUIT', 'white', self.screen_center, self.text_y_4, self.font_size_medium)
     
     def run(self):
-        # self.screen.fill(settings.bg_color)
+        self.screen.fill(settings.bg_color)
         self.screen.blit(self.background, (self.background_rect.x, self.background_rect.y))
         self.get_input()
 

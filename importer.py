@@ -22,3 +22,7 @@ def import_folder(path, needs_to_scale = False):
             lista.append(image_surf)
 
     return lista
+
+
+def import_tiles(path):
+    pass
