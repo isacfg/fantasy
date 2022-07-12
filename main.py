@@ -47,7 +47,11 @@ if __name__ == '__main__':
             menu.draw_text(str(round(clock.get_fps(), 2)),'white', settings.screen_width - 50, 50, 14)
 
         pygame.display.update() # updating the screen
-        clock.tick(settings.FPS) # setting the FPS to 60
+
+        if get_game_state() == 0: 
+            clock.tick(settings.MENU_FPS) # limit the FPS to 30 para consertar bug em que seta passa mais de uma vez por call
+        if get_game_state() == 1:
+            clock.tick(settings.FPS)
      
 
          
