@@ -33,19 +33,27 @@ class Jogo:
                 y = row_index * settings.tile_size                
             
                 if cell == 'X':
-                    tile = Tile((x,y), settings.tile_size) 
+                    tile = Tile((x,y), settings.tile_size, 'X') 
                     self.tiles.add(tile)
-
+                elif cell == 'F':
+                    tile = Tile((x,y), settings.tile_size, 'F') 
+                    self.tiles.add(tile)
+                elif cell == 'G':
+                    tile = Tile((x,y), settings.tile_size, 'G') 
+                    self.tiles.add(tile)
+                elif cell == 'I':
+                    tile = Tile((x,y), settings.tile_size, 'I') 
+                    self.tiles.add(tile)
                
        
         # adds player na tela
         self.is_player_ground_generated = False
 
         if not self.is_player_ground_generated:
-            tile = Tile((500,800), settings.tile_size)
+            tile = Tile((500,800), settings.tile_size, 'X')
             self.tiles.add(tile)
             self.is_player_ground_generated = True
-            
+
         player_sprite = Player((500,0), self.display_surface)
         self.player.add(player_sprite)
 

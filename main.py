@@ -22,6 +22,7 @@ if __name__ == '__main__':
     # game 
     level = Jogo(settings.test_level_map, screen)
     menu = Menu(screen)
+    print(f"Game state: {get_game_state()}")
 
     while True:
 
@@ -29,6 +30,11 @@ if __name__ == '__main__':
             if event.type == pygame.QUIT: # if the user clicked the close button, fecha o jogo
                 pygame.quit() # close the window
                 sys.exit() # close the program
+
+        if get_game_state() == 9: # reset
+            level = Jogo(settings.test_level_map, screen)
+            menu = Menu(screen)
+            set_game_state(0)
 
 
         if get_game_state() == 0: # global variable diz em qual tela the game is

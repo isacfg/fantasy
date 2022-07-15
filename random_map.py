@@ -1,6 +1,5 @@
 from global_variables import get_random_int
 
-# needs refactoring
 
 mapa = {
     '1': [],
@@ -26,9 +25,9 @@ def generate_random_map():
             for i in range(0, 30): # comprimento do mundo
                 x = get_random_int(0, 2) # chances
                 if x == 0:
-                    mapa[linha].append('X')
-                    mapa[linha].append('X')
-                    mapa[linha].append('X')
+                    mapa[linha].append('I')
+                    mapa[linha].append('F')
+                    mapa[linha].append('G')
                     mapa[linha].append('X')
                 
                 else:
@@ -39,10 +38,10 @@ def generate_random_map():
             for i in range(0, 30):
                 x = get_random_int(0, 40)
                 if x == 0:
+                    mapa[linha].append('G')
                     mapa[linha].append('X')
-                    mapa[linha].append('X')
-                    mapa[linha].append('X')
-                    mapa[linha].append('X')
+                    mapa[linha].append('F')
+                    mapa[linha].append('I')
                 
                 else:
                     mapa[linha].append(' ')
@@ -52,9 +51,9 @@ def generate_random_map():
             for i in range(0, 30):
                 x = get_random_int(0, 10)
                 if x == 0:
-                    mapa[linha].append('X')
-                    mapa[linha].append('X')
-                    mapa[linha].append('X')
+                    mapa[linha].append('F')
+                    mapa[linha].append('G')
+                    mapa[linha].append('I')
                     mapa[linha].append('X')
                 
                 else:
@@ -72,3 +71,20 @@ def generate_random_map():
 
 
 # print(generate_random_map())
+
+def reset_map():
+    mapa = {
+        '1': [],
+        '2': [],
+        '3': [],
+        '4': [],
+        '5': [],
+        '6': [],
+        '7': [],
+        '8': [],
+        '9': [],
+        '10': [],
+        '11': [],
+    }
+    array_strings = []
+    print("map reseted")
