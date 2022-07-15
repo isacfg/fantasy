@@ -2,6 +2,7 @@ import pygame
 from tiles import Tile
 from settings import Settings
 from player import Player
+from global_variables import get_random_int
 
 settings = Settings()
 class Jogo:
@@ -26,22 +27,25 @@ class Jogo:
         self.tiles = pygame.sprite.Group()
         self.player = pygame.sprite.GroupSingle()
 
-        self.is_player_ground_generated = False
         for row_index, row in enumerate(layout): # enumerate gives you the index and the value
             for col_index, cell in enumerate(row):
                 x = col_index * settings.tile_size
                 y = row_index * settings.tile_size                
             
                 if cell == 'X':
-                    tile = Tile((x,y), settings.tile_size, 1) # 1 is the type of tile (value will be random) 1-4
+                    tile = Tile((x,y), settings.tile_size) 
                     self.tiles.add(tile)
 
-                if not self.is_player_ground_generated:
-                    tile = Tile((500,800), settings.tile_size, 2)
-                    self.tiles.add(tile)
-                    self.is_player_ground_generated = True
+               
        
         # adds player na tela
+        self.is_player_ground_generated = False
+
+        if not self.is_player_ground_generated:
+            tile = Tile((500,800), settings.tile_size)
+            self.tiles.add(tile)
+            self.is_player_ground_generated = True
+            
         player_sprite = Player((500,0), self.display_surface)
         self.player.add(player_sprite)
 
