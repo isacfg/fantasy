@@ -8,24 +8,25 @@ settings = Settings()
 # Adicionar sprites for tiles
 
 class Tile(pygame.sprite.Sprite):
-    def __init__(self, pos, size, random_value):
+    def __init__(self, pos, size, selected_tile):
         super().__init__()
-        self.selected_tile = 1
-        
-        # self.selected_tile = randint(1,5) # random tile
-        self.selected_tile = random_value
-
-        if self.selected_tile == 1:
+        self.selected_tile = selected_tile
+        if self.selected_tile == 'X':
             self.image = pygame.image.load('./assets/tiles/tile01.png').convert_alpha()
-        elif self.selected_tile == 2:
+            self.image = pygame.transform.scale(self.image, (size, size))
+            self.rect = self.image.get_rect(topleft = pos)
+        elif self.selected_tile == 'F':
             self.image = pygame.image.load('./assets/tiles/tile02.png').convert_alpha()
-        elif self.selected_tile == 3:
+            self.image = pygame.transform.scale(self.image, (size, size))
+            self.rect = self.image.get_rect(topleft = pos)
+        elif self.selected_tile == 'G':
             self.image = pygame.image.load('./assets/tiles/tile03.png').convert_alpha()
-        elif self.selected_tile == 4:
+            self.image = pygame.transform.scale(self.image, (size, size))
+            self.rect = self.image.get_rect(topleft = pos)
+        elif self.selected_tile == 'I':
             self.image = pygame.image.load('./assets/tiles/tile04.png').convert_alpha()
-
-        # self.image = pygame.transform.scale(self.image, (size, size))
-        self.rect = self.image.get_rect(topleft = pos)
+            self.image = pygame.transform.scale(self.image, (size, size))
+            self.rect = self.image.get_rect(topleft = pos)
 
         # self.images = []
 

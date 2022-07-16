@@ -11,10 +11,9 @@ class Settings:
         self.game_authors = "Isaac F. e Israel S."
 
         # Mapa aleatorio
-        
         self.test_level_map = generate_random_map()
 
-        self.tile_size = 48
+        self.tile_size = 36
         self.screen_width = 1200
         self.screen_height = 700
         self.player_width = 19*3
