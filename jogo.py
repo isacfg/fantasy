@@ -127,3 +127,4 @@ class Jogo:
         self.get_player_on_ground()
         self.v_colision()
         self.player.draw(self.display_surface)
+

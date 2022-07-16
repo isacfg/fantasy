@@ -7,8 +7,11 @@ pygame.font.init()
 from settings import Settings
 from jogo import Jogo
 from menu import Menu
+from controls import Controls
+from credits_game import Credits
 
 from global_variables import *
+from random_map import *
 
 
 
@@ -22,6 +25,8 @@ if __name__ == '__main__':
     # game 
     level = Jogo(settings.test_level_map, screen)
     menu = Menu(screen)
+    controls = Controls(screen)
+    credits_game = Credits(screen)
     print(f"Game state: {get_game_state()}")
 
     while True:
@@ -32,6 +37,8 @@ if __name__ == '__main__':
                 sys.exit() # close the program
 
         if get_game_state() == 9: # reset
+            reset_map()
+            settings = Settings()
             level = Jogo(settings.test_level_map, screen)
             menu = Menu(screen)
             set_game_state(0)
@@ -44,7 +51,7 @@ if __name__ == '__main__':
 
 
         # Game
-        if get_game_state() == 1:
+        if get_game_state() == 1: # play state
 
             
             screen.fill(settings.bg_color) # filling the screen with a color
@@ -54,9 +61,18 @@ if __name__ == '__main__':
 
         pygame.display.update() # updating the screen
 
+        if get_game_state() == 2: # controls state # add states to menu
+            # print("game state 2, controls")
+
+            controls.run()
+
+        if get_game_state() == 3: # credits state
+            credits_game.run()
+
+        # FPS
         if get_game_state() == 0: 
             clock.tick(settings.MENU_FPS) # limit the FPS to 30 para consertar bug em que seta passa mais de uma vez por call
-        if get_game_state() == 1:
+        else:
             clock.tick(settings.FPS)
      
 

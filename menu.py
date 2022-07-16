@@ -40,24 +40,24 @@ class Menu():
 
     def get_input(self):
         keys = pygame.key.get_pressed()
-        self.limit_user_input += 0.4
+        self.limit_user_input += 0.9 # lower fixes
 
         if keys[pygame.K_RETURN] and self.selected_option == 1: # press ENTER to play
             set_game_state(1)
 
         if keys[pygame.K_RETURN] and self.selected_option == 2: # press ENTER to controls
-            pass
+            set_game_state(2)
 
         if keys[pygame.K_RETURN] and self.selected_option == 3: # press ENTER to credits
-            pass
+            set_game_state(3)
 
         if keys[pygame.K_RETURN] and self.selected_option == 4: # press ENTER to quit
             sys.exit()
         
         # testing reset
         if keys[pygame.K_r]:
-            set_game_state(9)
             reset_map()
+            set_game_state(9)
 
         if keys[pygame.K_DOWN] and self.selected_option == 1 and int(self.limit_user_input) > 1:
             self.arrow_image_rect.y = 360 # y of controls

@@ -19,42 +19,58 @@ array_strings = []
 # refactoring, odds tweaks
 def generate_random_map():
 
+                
+
     for linha in mapa:
-        if linha == '9' or linha == '10' or linha == '11':
+        # if linha == '9' or linha == '10' or linha == '11':
             
-            for i in range(0, 30): # comprimento do mundo
-                x = get_random_int(0, 2) # chances
-                if x == 0:
-                    mapa[linha].append('I')
-                    mapa[linha].append('F')
-                    mapa[linha].append('G')
-                    mapa[linha].append('X')
+        #     for i in range(0, 30): # comprimento do mundo
+        #         x = get_random_int(0, 2) # chances
+        #         if x == 0:
+        #             mapa[linha].append('I')
+        #             mapa[linha].append('F')
+        #             mapa[linha].append('G')
+        #             mapa[linha].append('X')
                 
-                else:
-                    mapa[linha].append(' ')
-                    mapa[linha].append(' ')
+        #         else:
+        #             mapa[linha].append(' ')
+        #             mapa[linha].append(' ')
 
-        elif int(linha) % 2 == 0:
-            for i in range(0, 30):
-                x = get_random_int(0, 40)
-                if x == 0:
-                    mapa[linha].append('G')
-                    mapa[linha].append('X')
-                    mapa[linha].append('F')
-                    mapa[linha].append('I')
+        # elif int(linha) % 2 == 0:
+        #     for i in range(0, 30):
+        #         x = get_random_int(0, 40)
+        #         if x == 0:
+        #             mapa[linha].append('G')
+        #             mapa[linha].append('X')
+        #             mapa[linha].append('F')
+        #             mapa[linha].append('I')
                 
-                else:
-                    mapa[linha].append(' ')
-                    mapa[linha].append(' ')
+        #         else:
+        #             mapa[linha].append(' ')
+        #             mapa[linha].append(' ')
 
-        elif int(linha) % 2 != 0:
+        # elif int(linha) % 2 != 0:
+        #     for i in range(0, 30):
+        #         x = get_random_int(0, 10)
+        #         if x == 0:
+        #             mapa[linha].append('F')
+        #             mapa[linha].append('G')
+        #             mapa[linha].append('I')
+        #             mapa[linha].append('X')
+                
+        #         else:
+        #             mapa[linha].append(' ')
+        #             mapa[linha].append(' ')
+
+        tiles_letters = ['not', 'X', 'F', 'G', 'I']
+        if int(linha) > 5:
             for i in range(0, 30):
                 x = get_random_int(0, 10)
                 if x == 0:
-                    mapa[linha].append('F')
-                    mapa[linha].append('G')
-                    mapa[linha].append('I')
-                    mapa[linha].append('X')
+                    mapa[linha].append(tiles_letters[get_random_int(1,4)])
+                    mapa[linha].append(tiles_letters[get_random_int(1,4)])
+                    mapa[linha].append(tiles_letters[get_random_int(1,4)])
+                    mapa[linha].append(tiles_letters[get_random_int(1,4)])
                 
                 else:
                     mapa[linha].append(' ')

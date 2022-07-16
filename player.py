@@ -1,8 +1,10 @@
 import pygame, os
 from settings import Settings
 from importer import import_folder
+from random_map import reset_map
 
-from global_variables import get_game_state, set_game_state
+
+from global_variables import *
 
 
 settings = Settings()
@@ -35,6 +37,7 @@ class Player(pygame.sprite.Sprite):
         self.on_ceiling = False
         self.on_left = False
         self.on_right = False
+
 
 
     def import_player_sprites(self):
@@ -97,13 +100,14 @@ class Player(pygame.sprite.Sprite):
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_ESCAPE]:
-            set_game_state(0) # menu
+            reset_map()
+            set_game_state(9)
 
-        if keys[pygame.K_a]:
+        if keys[pygame.K_a] or keys[pygame.K_LEFT]:
             self.direction.x = -1
             self.facing_right = False
 
-        elif keys[pygame.K_d]:
+        elif keys[pygame.K_d] or keys[pygame.K_RIGHT]:
             self.direction.x = 1
             self.facing_right = True
 
@@ -113,7 +117,7 @@ class Player(pygame.sprite.Sprite):
         if keys[pygame.K_g]: # test animations
             self.status = 'death'
 
-        if keys[pygame.K_SPACE] and self.on_ground:
+        if (keys[pygame.K_SPACE] or keys[pygame.K_w] or keys[pygame.K_UP]) and self.on_ground:
             self.jump()
 
     def get_status(self): 
@@ -137,8 +141,16 @@ class Player(pygame.sprite.Sprite):
     def jump(self):
         self.direction.y = self.jump_speed
 
+    def game_over(self):
+        if self.rect.y > settings.screen_height:
+            reset_map()
+            set_game_state(9)
+            
+
     def update(self):
         self.get_input()
         self.get_status()
         self.animate()
         self.run_dust_animation()
+
+        self.game_over()
