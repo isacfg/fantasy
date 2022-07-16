@@ -4,9 +4,6 @@ from settings import Settings
 from importer import import_folder
 settings = Settings()
 
-# Todo
-# Adicionar sprites for tiles
-
 class Tile(pygame.sprite.Sprite):
     def __init__(self, pos, size, selected_tile):
         super().__init__()

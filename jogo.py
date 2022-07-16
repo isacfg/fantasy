@@ -4,6 +4,8 @@ from settings import Settings
 from player import Player
 from global_variables import *
 
+from enemies import Enemies
+
 class Jogo:
     def __init__(self, mapa_test, surface):
         self.settings = Settings()
@@ -11,6 +13,7 @@ class Jogo:
         # level setup
         self.display_surface = surface
         self.setup_level(mapa_test) # cria o mundo através do layout das configurações
+        self.generate_enemies()
         self.world_shift = -0 # moves the level
         self.current_x = 0
 
@@ -49,32 +52,45 @@ class Jogo:
                
        
         # adds player na tela
-        self.is_player_ground_generated = False
 
-        if not self.is_player_ground_generated:
-            tile = Tile((500,800), self.settings.tile_size, 'X')
-            self.tiles.add(tile)
-            self.is_player_ground_generated = True
+        player_tile = Tile((500,500), self.settings.tile_size, 'X')
+        self.tiles.add(player_tile)
 
         player_sprite = Player((500,0), self.display_surface)
         self.player.add(player_sprite)
+
+    def generate_enemies(self):
+        self.enemy = pygame.sprite.GroupSingle()
+        enemy_sprite = Enemies((500,0), self.display_surface)
+        self.enemy.add(enemy_sprite)
 
     def scroll_x(self): # ilusao de camera, muda velocidade do mundo
         player = self.player.sprite
         player_x = player.rect.centerx
         direction_x = player.direction.x
 
+        enemy = self.enemy.sprite
+        enemy_x = enemy.rect.centerx
+
+
         if player_x < self.settings.screen_width / 4 and direction_x < 0: # 4 is one quarter of the screen, chegando ai a camera se mexe e o player fica parado para criar ilusao de camera
             self.world_shift = 8
             player.speed = 0
+            enemy.direction.x = 1
+            enemy.speed = 8
         
         elif player_x > self.settings.screen_width - (self.settings.screen_width / 4) and direction_x > 0:
             self.world_shift = -8
             player.speed = 0
+            enemy.speed = 8
+            enemy.direction.x = -1
+
 
         else:
             self.world_shift = 0
             player.speed = 8
+            enemy.speed = 8
+            enemy.direction.x = 0
 
     def h_colision(self):
         player = self.player.sprite
@@ -114,6 +130,26 @@ class Jogo:
         if player.on_ceiling and player.direction.y > 0:
             player.on_ceiling = False
 
+    def enemy_h_colision(self):
+        enemy = self.enemy.sprite
+        enemy.rect.x += enemy.direction.x * enemy.speed
+
+
+    def enemy_v_colision(self):
+        enemy = self.enemy.sprite
+        enemy.apply_gravity()
+
+        for sprite in self.tiles.sprites():
+            if sprite.rect.colliderect(enemy.rect):
+                if enemy.direction.y < 0:
+                    enemy.rect.top = sprite.rect.bottom
+                    enemy.direction.y = 0
+                    enemy.on_ceiling = True
+                elif enemy.direction.y > 0:
+                    enemy.rect.bottom = sprite.rect.top
+                    enemy.direction.y = 0
+                    enemy.on_ground = True
+
     def run(self):
 
 
@@ -130,3 +166,8 @@ class Jogo:
         self.v_colision()
         self.player.draw(self.display_surface)
 
+        # enemy
+        self.enemy.update()
+        self.enemy_h_colision()
+        self.enemy_v_colision()
+        self.enemy.draw(self.display_surface)

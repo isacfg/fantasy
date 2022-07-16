@@ -11,6 +11,9 @@ from menu import Menu
 from controls import Controls
 from credits_game import Credits
 
+# temp
+from enemies import Enemies
+
 from global_variables import *
 from random_map import *
 
@@ -35,6 +38,8 @@ if __name__ == '__main__':
     # mixer.music.load('./assets/music/bg.wav')
     mixer.music.set_volume(0.1)
     mixer.music.play(-1)
+
+    # enemy = Enemies((500, 500), screen)
 
     while True:
 
@@ -63,6 +68,7 @@ if __name__ == '__main__':
             
             screen.fill(settings.bg_color) # filling the screen with a color
             level.run()
+            # enemy.update()
             # show fps
             menu.draw_text(str(round(clock.get_fps(), 2)),'white', settings.screen_width - 50, 50, 14)
 
