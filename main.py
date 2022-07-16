@@ -1,4 +1,5 @@
 import pygame, sys
+from pygame import mixer
 
 # Iniciando fontes
 pygame.font.init()
@@ -28,6 +29,12 @@ if __name__ == '__main__':
     controls = Controls(screen)
     credits_game = Credits(screen)
     print(f"Game state: {get_game_state()}")
+
+    # music
+    mixer.music.load('./assets/music/menu.wav')
+    # mixer.music.load('./assets/music/bg.wav')
+    mixer.music.set_volume(0.1)
+    mixer.music.play(-1)
 
     while True:
 

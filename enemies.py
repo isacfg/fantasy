@@ -4,20 +4,11 @@ from settings import Settings
 
 settings = Settings()
 
-class Enemies:
-    def __init__(self):
+class Enemies(pygame.sprite.Sprite):
+    def __init__(self, pos, surface):
         pass
 
-    def move(self):
-        pass
-
-    def draw(self):
-        pass
-
-    def check_collision(self):
-        pass
-
-    def check_collision_with_player(self):
+    def import_enemy_sprites(self):
         pass
 
     def update(self):

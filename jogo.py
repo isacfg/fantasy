@@ -2,11 +2,11 @@ import pygame
 from tiles import Tile
 from settings import Settings
 from player import Player
-from global_variables import get_random_int
+from global_variables import *
 
-settings = Settings()
 class Jogo:
     def __init__(self, mapa_test, surface):
+        self.settings = Settings()
 
         # level setup
         self.display_surface = surface
@@ -28,21 +28,23 @@ class Jogo:
         self.player = pygame.sprite.GroupSingle()
 
         for row_index, row in enumerate(layout): # enumerate gives you the index and the value
+
+
             for col_index, cell in enumerate(row):
-                x = col_index * settings.tile_size
-                y = row_index * settings.tile_size                
+                x = col_index * self.settings.tile_size
+                y = row_index * self.settings.tile_size                
             
                 if cell == 'X':
-                    tile = Tile((x,y), settings.tile_size, 'X') 
+                    tile = Tile((x,y), self.settings.tile_size, 'X') 
                     self.tiles.add(tile)
                 elif cell == 'F':
-                    tile = Tile((x,y), settings.tile_size, 'F') 
+                    tile = Tile((x,y), self.settings.tile_size, 'F') 
                     self.tiles.add(tile)
                 elif cell == 'G':
-                    tile = Tile((x,y), settings.tile_size, 'G') 
+                    tile = Tile((x,y), self.settings.tile_size, 'G') 
                     self.tiles.add(tile)
                 elif cell == 'I':
-                    tile = Tile((x,y), settings.tile_size, 'I') 
+                    tile = Tile((x,y), self.settings.tile_size, 'I') 
                     self.tiles.add(tile)
                
        
@@ -50,7 +52,7 @@ class Jogo:
         self.is_player_ground_generated = False
 
         if not self.is_player_ground_generated:
-            tile = Tile((500,800), settings.tile_size, 'X')
+            tile = Tile((500,800), self.settings.tile_size, 'X')
             self.tiles.add(tile)
             self.is_player_ground_generated = True
 
@@ -62,11 +64,11 @@ class Jogo:
         player_x = player.rect.centerx
         direction_x = player.direction.x
 
-        if player_x < settings.screen_width / 4 and direction_x < 0: # 4 is one quarter of the screen, chegando ai a camera se mexe e o player fica parado para criar ilusao de camera
+        if player_x < self.settings.screen_width / 4 and direction_x < 0: # 4 is one quarter of the screen, chegando ai a camera se mexe e o player fica parado para criar ilusao de camera
             self.world_shift = 8
             player.speed = 0
         
-        elif player_x > settings.screen_width - (settings.screen_width / 4) and direction_x > 0:
+        elif player_x > self.settings.screen_width - (self.settings.screen_width / 4) and direction_x > 0:
             self.world_shift = -8
             player.speed = 0
 
