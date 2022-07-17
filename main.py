@@ -39,17 +39,25 @@ if __name__ == '__main__':
     mixer.music.set_volume(0.1)
     mixer.music.play(-1)
 
-    # enemy = Enemies((500, 500), screen)
+    start_time()
+    max_score = 0
 
     while True:
+        # print(get_time())
 
+    
+    
         for event in pygame.event.get(): # watching for events
             if event.type == pygame.QUIT: # if the user clicked the close button, fecha o jogo
                 pygame.quit() # close the window
                 sys.exit() # close the program
 
         if get_game_state() == 9: # reset
+            if get_time() > max_score:
+                max_score = get_time()
+
             reset_map()
+            reset_time()
             settings = Settings()
             level = Jogo(settings.test_level_map, screen)
             menu = Menu(screen)
@@ -61,6 +69,9 @@ if __name__ == '__main__':
             menu.run()
             menu.draw_text(str(round(clock.get_fps(), 2)),'white', settings.screen_width - 50, 50, 14)
 
+            menu.draw_text(f"{str(get_time())}", 'white',50, 50, 14)
+            menu.draw_text(f"{str(max_score)}", 'white', 50, 100, 14)
+
 
         # Game
         if get_game_state() == 1: # play state
@@ -71,6 +82,9 @@ if __name__ == '__main__':
             # enemy.update()
             # show fps
             menu.draw_text(str(round(clock.get_fps(), 2)),'white', settings.screen_width - 50, 50, 14)
+                
+            menu.draw_text(f"{str(get_time())}", 'white',50, 50, 14)
+            menu.draw_text(f"{str(max_score)}", 'white', 50, 100, 14)           
 
         pygame.display.update() # updating the screen
 
