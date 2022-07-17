@@ -23,7 +23,7 @@ class Enemies(pygame.sprite.Sprite):
 
         # physics
         self.direction = pygame.math.Vector2(0, 0)
-        self.speed = 2
+        self.speed = 3
         self.gravity = 0.8
 
 
@@ -41,7 +41,17 @@ class Enemies(pygame.sprite.Sprite):
             self.animations[animation] = import_folder(full_path, True) # true resizes to setings player width and height
                 
     def get_status(self):
-        self.status = 'idle'
+        # self.status = 'idle'
+        if self.direction.x == 0:
+            self.status = 'idle'
+
+        elif self.direction.x == -1:
+            self.facing_right = False
+            self.status = 'run'
+
+        elif self.direction.x == 1:
+            self.facing_right = True
+            self.status = 'run'
 
     def get_input(self):
         keys = pygame.key.get_pressed()
@@ -73,6 +83,23 @@ class Enemies(pygame.sprite.Sprite):
         self.direction.y += self.gravity
         self.rect.y += self.direction.y
         # print(f"gravity was called")
+
+    def draw(self):
+        self.display_surface.blit(self.image, self.rect)
+
+    def get_enemy_position(self):
+        return self.rect.x, self.rect.y
+
+    def kill_enemy(self):
+        if self.rect.y > settings.screen_height:
+            return True
+
+    def random_movement(self):
+
+        self.direction.x = random.randint(-1, 1)
+        self.direction.y = random.randint(-1, 1)
+
+        pass
 
     def update(self):
         self.get_status()

@@ -44,7 +44,6 @@ if __name__ == '__main__':
 
     while True:
         # print(get_time())
-
     
     
         for event in pygame.event.get(): # watching for events
