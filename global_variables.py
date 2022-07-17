@@ -28,13 +28,36 @@ def get_random_int(min, max):
 
 # text
 font_name = './assets/fonts/PressStart2P-Regular.ttf'
-def draw_text(text,color,x,y, font_size, screen): 
+def draw_text(text,color,x,y, font_size, screen, debug = False): 
     font = pygame.font.Font(font_name, font_size) # fontname, size
 
     text_obj = font.render(text, 1, color)
     text_rect = text_obj.get_rect()
     text_rect.center = (x,y)
     screen.blit(text_obj, text_rect)
+    if debug:
+        print(f"draw text was called: {text}")
+
+global start_ticks
+start_ticks = 0
+global seconds
+seconds = 0
+
+def start_time():
+    start_ticks = pygame.time.get_ticks()
+
+
+def get_time():
+    seconds = (pygame.time.get_ticks() - start_ticks) / 1000
+    seconds = round(seconds, 1)
+
+    return seconds   
+
+
+
+def reset_time():
+    global start_ticks
+    start_ticks = pygame.time.get_ticks()
 
 # player
 # global is_player_dead

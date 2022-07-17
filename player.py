@@ -1,4 +1,5 @@
-import pygame, os
+import pygame
+from pygame import mixer
 from settings import Settings
 from importer import import_folder
 from random_map import reset_map
@@ -139,13 +140,21 @@ class Player(pygame.sprite.Sprite):
         self.rect.y += self.direction.y
 
     def jump(self):
+        jump_sfx = mixer.Sound('./assets/music/jump.mp3')
+        jump_sfx.set_volume(0.2)
+        jump_sfx.play()
         self.direction.y = self.jump_speed
 
     def game_over(self):
         if self.rect.y > settings.screen_height:
-            reset_map()
+            # reset_map()
+            death_sfx = mixer.Sound('./assets/music/hit.mp3')
+            death_sfx.set_volume(0.2)
+            death_sfx.play()
             set_game_state(9)
             
+    def get_player_pos(self):
+        return self.rect.x, self.rect.y
 
     def update(self):
         self.get_input()

@@ -1,4 +1,6 @@
+from cgitb import reset
 import pygame, sys
+from pygame import mixer
 
 # Iniciando fontes
 pygame.font.init()
@@ -9,6 +11,9 @@ from jogo import Jogo
 from menu import Menu
 from controls import Controls
 from credits_game import Credits
+
+# temp
+from enemies import Enemies
 
 from global_variables import *
 from random_map import *
@@ -29,25 +34,44 @@ if __name__ == '__main__':
     credits_game = Credits(screen)
     print(f"Game state: {get_game_state()}")
 
-    while True:
+    # music
+    mixer.music.load('./assets/music/menu.wav')
+    # mixer.music.load('./assets/music/bg.wav')
+    mixer.music.set_volume(0.1)
+    mixer.music.play(-1)
 
+    start_time()
+    max_score = 0
+
+    while True:
+        # print(get_time())
+    
+    
         for event in pygame.event.get(): # watching for events
             if event.type == pygame.QUIT: # if the user clicked the close button, fecha o jogo
                 pygame.quit() # close the window
                 sys.exit() # close the program
 
         if get_game_state() == 9: # reset
-            reset_map()
-            settings = Settings()
+            if get_time() > max_score:
+                max_score = get_time()
+
+            # reset_map()
+            reset_time()
+            # settings = Settings()
             level = Jogo(settings.test_level_map, screen)
             menu = Menu(screen)
             set_game_state(0)
 
 
         if get_game_state() == 0: # global variable diz em qual tela the game is
+            reset_time()
 
             menu.run()
             menu.draw_text(str(round(clock.get_fps(), 2)),'white', settings.screen_width - 50, 50, 14)
+
+            menu.draw_text(f"Tempo atual: {str(get_time())}", 'white',50, 50, 14, True)
+            menu.draw_text(f"Tempo Máximo: {str(max_score)}", 'white', 50, 100, 14, True)
 
 
         # Game
@@ -56,8 +80,12 @@ if __name__ == '__main__':
             
             screen.fill(settings.bg_color) # filling the screen with a color
             level.run()
+            # enemy.update()
             # show fps
             menu.draw_text(str(round(clock.get_fps(), 2)),'white', settings.screen_width - 50, 50, 14)
+                
+            menu.draw_text(f"Tempo atual: {str(get_time())}", 'white',50, 50, 14, True)
+            menu.draw_text(f"Tempo Máximo: {str(max_score)}", 'white', 50, 100, 14, True)        
 
         pygame.display.update() # updating the screen
 
