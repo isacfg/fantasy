@@ -100,12 +100,14 @@ class Menu():
             self.selected_option = 3 # 3 is the credits option
             self.limit_user_input = 0
 
-    def draw_text(self,text,color,x,y, font_size):
+    def draw_text(self,text,color,x,y, font_size, bottomleft = False):
         self.font = pygame.font.Font(self.font_name, font_size) # fontname, size
 
         self.text_obj = self.font.render(text, 1, color)
         self.text_rect = self.text_obj.get_rect()
         self.text_rect.center = (x,y)
+        if bottomleft:
+            self.text_rect.bottomleft = (x,y)
         self.screen.blit(self.text_obj, self.text_rect)
 
     def main_texts(self):

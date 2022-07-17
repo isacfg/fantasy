@@ -23,7 +23,7 @@ class Enemies(pygame.sprite.Sprite):
 
         # physics
         self.direction = pygame.math.Vector2(0, 0)
-        self.speed = 3
+        self.speed = 8
         self.gravity = 0.8
 
 

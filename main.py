@@ -1,3 +1,4 @@
+from cgitb import reset
 import pygame, sys
 from pygame import mixer
 
@@ -55,21 +56,22 @@ if __name__ == '__main__':
             if get_time() > max_score:
                 max_score = get_time()
 
-            reset_map()
+            # reset_map()
             reset_time()
-            settings = Settings()
+            # settings = Settings()
             level = Jogo(settings.test_level_map, screen)
             menu = Menu(screen)
             set_game_state(0)
 
 
         if get_game_state() == 0: # global variable diz em qual tela the game is
+            reset_time()
 
             menu.run()
             menu.draw_text(str(round(clock.get_fps(), 2)),'white', settings.screen_width - 50, 50, 14)
 
-            menu.draw_text(f"{str(get_time())}", 'white',50, 50, 14)
-            menu.draw_text(f"{str(max_score)}", 'white', 50, 100, 14)
+            menu.draw_text(f"Tempo atual: {str(get_time())}", 'white',50, 50, 14, True)
+            menu.draw_text(f"Tempo Máximo: {str(max_score)}", 'white', 50, 100, 14, True)
 
 
         # Game
@@ -82,8 +84,8 @@ if __name__ == '__main__':
             # show fps
             menu.draw_text(str(round(clock.get_fps(), 2)),'white', settings.screen_width - 50, 50, 14)
                 
-            menu.draw_text(f"{str(get_time())}", 'white',50, 50, 14)
-            menu.draw_text(f"{str(max_score)}", 'white', 50, 100, 14)           
+            menu.draw_text(f"Tempo atual: {str(get_time())}", 'white',50, 50, 14, True)
+            menu.draw_text(f"Tempo Máximo: {str(max_score)}", 'white', 50, 100, 14, True)        
 
         pygame.display.update() # updating the screen
 

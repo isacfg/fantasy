@@ -153,6 +153,8 @@ class Player(pygame.sprite.Sprite):
             death_sfx.play()
             set_game_state(9)
             
+    def get_player_pos(self):
+        return self.rect.x, self.rect.y
 
     def update(self):
         self.get_input()

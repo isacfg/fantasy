@@ -54,6 +54,7 @@ def get_time():
     return seconds   
 
 
+
 def reset_time():
     global start_ticks
     start_ticks = pygame.time.get_ticks()

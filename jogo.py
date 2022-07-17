@@ -1,4 +1,5 @@
 import pygame
+from pygame import mixer
 from tiles import Tile
 from settings import Settings
 from player import Player
@@ -23,6 +24,8 @@ class Jogo:
         self.generate_enemies(2, True) # quantidade, first enemy true 
         self.limit_generated_enemies = 0
         self.stop_generating_enemies = False
+        self.player_x_position = 0
+        self.player_y_position = 0
 
 
     def get_player_on_ground(self):
@@ -58,15 +61,17 @@ class Jogo:
        
         # adds player na tela
 
-        player_tile = Tile((500,500), self.settings.tile_size, 'X')
+        player_tile = Tile((600,500), self.settings.tile_size, 'X')
         self.tiles.add(player_tile)
 
-        player_sprite = Player((500,0), self.display_surface)
+        player_sprite = Player((600,0), self.display_surface)
         self.player.add(player_sprite)
 
     def scroll_x(self): # ilusao de camera, muda velocidade do mundo
         player = self.player.sprite
         player_x = player.rect.centerx
+        self.player_x_position = player_x
+        self.player_y_position = player.rect.centery
         direction_x = player.direction.x
 
         # enemy = self.enemy.sprites()
@@ -78,11 +83,11 @@ class Jogo:
             player.speed = 0
             # # for enemy in self.enemy.sprites():
                 # enemy.direction.x = 1
-                # enemy.speed = 3
+                # enemy.speed = 8
 
             for enemy in self.enemies:
                 enemy.direction.x = 1
-                enemy.speed = 3
+                enemy.speed = 8
          
         
         elif player_x > self.settings.screen_width - (self.settings.screen_width / 4) and direction_x > 0:
@@ -90,21 +95,21 @@ class Jogo:
             player.speed = 0
             # # for enemy in self.enemy.sprites():
                 # enemy.direction.x = -1
-                # enemy.speed = 3
+                # enemy.speed = 8
 
             for enemy in self.enemies:
                 enemy.direction.x = -1
-                enemy.speed = 3
+                enemy.speed = 8
 
         else:
             self.world_shift = 0
             player.speed = 8
             # # for enemy in self.enemy.sprites():
-                # enemy.speed = 3
+                # enemy.speed = 8
                 # enemy.direction.x = 0
             
             for enemy in self.enemies:
-                enemy.speed = 3
+                enemy.speed = 8
                 # enemy.direction.x = 0
 
     def h_colision(self):
@@ -172,22 +177,7 @@ class Jogo:
                         enemy.direction.x = -1
 
     def enemy_v_colision(self):
-        # enemy = self.enemy.sprites
-        # enemy.apply_gravity()
-        # # for enemy in self.enemy.sprites():
-            # enemy.apply_gravity()
-
-        # for sprite in self.tiles.sprites():
-            # if sprite.rect.colliderect(enemy.rect):
-                # # for enemy in self.enemy.sprites():
-                    # if enemy.direction.y < 0:
-                        # enemy.rect.top = sprite.rect.bottom
-                        # enemy.direction.y = 0
-                        # enemy.on_ceiling = True
-                    # elif enemy.direction.y > 0:
-                        # enemy.rect.bottom = sprite.rect.top
-                        # enemy.direction.y = 0
-                        # enemy.on_ground = True
+     
         for enemy in self.enemies:
             enemy.apply_gravity()
             for sprite in self.tiles.sprites():
@@ -218,29 +208,30 @@ class Jogo:
         #     self.enemy = pygame.sprite.GroupSingle()
         #     enemy_sprite = Enemies((500,0), self.display_surface)
             # self.enemy.add(enemy_sprite)s
-        if Automatic and int(self.limit_generated_enemies) > 1 and self.stop_generating_enemies == False:
-            random_x_1 = get_random_int(30, self.settings.screen_width - 30)
-            random_x_2 = get_random_int(30, self.settings.screen_width - 30)
-            random_x_3 = get_random_int(30, self.settings.screen_width - 30)
-            random_x_4 = get_random_int(30, self.settings.screen_width - 30)
-            self.enemies.append(Enemies((random_x_1,-20), self.display_surface))
-            self.enemies.append(Enemies((random_x_2,-20), self.display_surface))
-            self.enemies.append(Enemies((random_x_3,-20), self.display_surface))
-            # self.enemies.append(Enemies((random_x_4,-20), self.display_surface))
-            print(f"automatic enemy generated")
-            self.limit_generated_enemies = 0
-        
-        else:
-            if First_enemy:
-                for j in range(0, i + 1):
-                    self.enemies.append(Enemies((500,0), self.display_surface))
+        if get_time() > 1:
+            if Automatic and int(self.limit_generated_enemies) > 1 and self.stop_generating_enemies == False:
+                random_x_1 = get_random_int(30, self.settings.screen_width - 30)
+                random_x_2 = get_random_int(30, self.settings.screen_width - 30)
+                random_x_3 = get_random_int(30, self.settings.screen_width - 30)
+                random_x_4 = get_random_int(30, self.settings.screen_width - 30)
+                self.enemies.append(Enemies((random_x_1,-20), self.display_surface))
+                self.enemies.append(Enemies((random_x_2,-20), self.display_surface))
+                self.enemies.append(Enemies((random_x_3,-20), self.display_surface))
+                # self.enemies.append(Enemies((random_x_4,-20), self.display_surface))
+                print(f"automatic enemy generated")
+                self.limit_generated_enemies = 0
+            
+            else:
+                if First_enemy:
+                    for j in range(0, i + 1):
+                        self.enemies.append(Enemies((500,0), self.display_surface))
 
-            elif not First_enemy and int(self.limit_generated_enemies) > 1:
-                keys = pygame.key.get_pressed()
-                if keys[pygame.K_v]:
-                    self.enemies.append(Enemies(( get_random_int(30, self.settings.screen_width - 30),0), self.display_surface))
-                    print(f"manual enemy generated")
-                    self.limit_generated_enemies = 0
+                elif not First_enemy and int(self.limit_generated_enemies) > 1:
+                    keys = pygame.key.get_pressed()
+                    if keys[pygame.K_v]:
+                        self.enemies.append(Enemies(( get_random_int(30, self.settings.screen_width - 30),0), self.display_surface))
+                        print(f"manual enemy generated")
+                        self.limit_generated_enemies = 0
 
 
     def toggle_enemies_generation(self):
@@ -252,7 +243,17 @@ class Jogo:
             self.stop_generating_enemies = True
             self.enemies = []
             print(f"stop generating enemies")
-                  
+
+    def check_enemies_colision(self):
+
+        for enemy in self.enemies:
+
+            if self.player.sprite.rect.colliderect(enemy.rect):
+                self.enemies = []
+                death_sfx = mixer.Sound('./assets/music/hit.mp3')
+                death_sfx.set_volume(0.2)
+                death_sfx.play()                
+                set_game_state(9)
   
                     
     def run(self):
@@ -283,6 +284,7 @@ class Jogo:
         self.generate_enemies() # manual enemy generation (press v)
         self.limit_generated_enemies += 0.2
         self.toggle_enemies_generation()
+        self.check_enemies_colision()
 
         if get_time() % 2 == 0:
             self.generate_enemies(1, False, True)
@@ -296,9 +298,18 @@ class Jogo:
             self.enemies[i].draw()
             # print(f"enemy {i} pos {self.enemies[i].get_enemy_position()}")
 
-        self.enemy_h_colision()
+            # follows player
+            # if self.player_x_position > self.enemies[i].rect.x:
+            #     self.enemies[i].direction.x = 1
+            # elif self.player_x_position < self.enemies[i].rect.x:
+            #     self.enemies[i].direction.x = -1
+
         for k, enemy in enumerate(self.enemies):
 
             if self.enemies[k].kill_enemy():
                 del self.enemies[k]
-                print(f"enemy {k} killed")        
+                print(f"enemy {k} killed")    
+
+        self.enemy_h_colision()
+            
+
